@@ -1,9 +1,9 @@
 import { CustomInput } from "../ui/customInput"
-import { MessageInput } from "../ui/messageInput"
+import { MessageInput } from "./messageInput"
 
 export const ChatInput = () => {
     return (
-        <div>
+        <div className="grow mr-3">
             <MessageInput />
         </div>
     )

@@ -59,3 +59,31 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.scrollbar-w-2::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.25rem;
+}
+
+.scrollbar-track-red-lighter::-webkit-scrollbar-track {
+  --bg-opacity: 0.5;
+  background-color: #d2d2d200;
+}
+
+.scrollbar-thumb-red::-webkit-scrollbar-thumb {
+  --bg-opacity: 0.5;
+  background-color: #ffa200;
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+}
