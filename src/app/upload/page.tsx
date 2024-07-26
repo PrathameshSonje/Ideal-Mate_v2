@@ -6,7 +6,7 @@ import { ArrowRight, Cloud } from "lucide-react"
 const UploadPage = () => {
     return (
         <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-            <span className="font-bold text-zinc-700 text-2xl mb-6">Import a Document</span>
+            <span className="font-bold text-zinc-700 text-[28px]  mb-6">Import a Document</span>
             <CustomInput  className="w-[500px]" placeholder="Enter a Url"/>
             <section>
                 <div className="border h-64 w-[500px] border-dashed border-gray-300 rounded-sm overflow-hidden">

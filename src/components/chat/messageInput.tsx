@@ -23,7 +23,7 @@ export const MessageInput = () => {
                 <textarea
                     ref={textareaRef}
                     className={clsx(
-                        "flex-1 outline-none resize-none text-zinc-700 text-sm font-medium", {
+                        "flex-1 outline-none resize-none text-zinc-700 text-[15px] font-medium", {
                         "overflow-y-auto max-h-[120px]": isOverflow
                     }
                     )}

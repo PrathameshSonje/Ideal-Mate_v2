@@ -9,59 +9,7 @@ export const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(true);
 
     const files = [{
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
+        fileName: "The mechanics of nuclear fission",
         size: "4 mb"
     },
     {
@@ -82,7 +30,7 @@ export const Sidebar = () => {
     }
 
     return (
-        <div className="border-r h-screen">
+        <div className="border-r h-screen ">
             {collapsed ? (
                 <div className="w-[60px] px-2 flex flex-col h-full pb-4">
                     <div className="flex-1">
@@ -99,7 +47,7 @@ export const Sidebar = () => {
                         <div className="flex flex-col gap-2 max-h-[calc(100vh-235px)] overflow-y-auto hide-scrollbar">
                             {
                                 files.map((file) => (
-                                    <div className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-sm cursor-pointer hover:bg-zinc-200">
+                                    <div className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200">
                                         {file.fileName[0]}
                                     </div>
                                 ))
@@ -137,8 +85,8 @@ export const Sidebar = () => {
                         <div id="files" className="flex flex-col gap-2 max-h-[calc(100vh-240px)] overflow-y-auto hide-scrollbar">
                             {
                                 files.map((file, index) => (
-                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center justify-between p-1.5 py-2 overflow-hidden text-sm font-medium cursor-pointer hover:bg-zinc-200">
-                                        <div className="flex-1 mr-1.5 flex pt-[2px]">
+                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center justify-between p-1.5 py-2 overflow-hidden text-[15px] font-medium cursor-pointer hover:bg-zinc-200">
+                                        <div className="flex-1 mr-1 flex pt-[2px]">
                                             <MessageSquare className="h-4" color="#7d7d7d" />
                                         </div>
                                         <div className="flex-grow text-zinc-700 hover:text-zinc-900 overflow-hidden whitespace-nowrap text-ellipsis">
