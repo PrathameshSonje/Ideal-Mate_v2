@@ -3,7 +3,7 @@ import { ArrowUpRight, UserRound } from "lucide-react"
 
 export const Navbar = () => {
     return (
-        <div className="h-[50px] border-b w-full flex items-center px-4 justify-between text-[14px] font-semibold text-zinc-800">
+        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[14px] font-semibold text-zinc-800">
             <span>Name of the pdf</span>
             <div className="flex gap-6">
                 <Link href="/support">

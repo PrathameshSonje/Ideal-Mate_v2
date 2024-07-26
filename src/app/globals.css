@@ -70,7 +70,7 @@
 }
 
 .scrollbar-w-2::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.4rem;
   height: 0.25rem;
 }
 
@@ -81,9 +81,19 @@
 
 .scrollbar-thumb-red::-webkit-scrollbar-thumb {
   --bg-opacity: 0.5;
-  background-color: #ffa200;
+  background-color: #cacaca;
 }
 
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
   border-radius: 7px;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
