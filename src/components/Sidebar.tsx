@@ -80,7 +80,8 @@ export const Sidebar = () => {
                                 <Button className="w-full">
                                     <Plus className="h-[16px] w-[16xpx]" strokeWidth={2.5} />
                                     Import
-                                </Button></Link>
+                                </Button>
+                            </Link>
                         </div>
                         <div id="files" className="flex flex-col gap-2 max-h-[calc(100vh-240px)] overflow-y-auto hide-scrollbar">
                             {

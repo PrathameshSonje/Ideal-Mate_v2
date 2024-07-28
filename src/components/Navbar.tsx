@@ -3,7 +3,7 @@ import { ArrowUpRight, UserRound } from "lucide-react"
 
 export const Navbar = () => {
     return (
-        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-semibold text-zinc-800">
+        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-800">
             <span>The Mechanics of Nuclear Fission</span>
             <div className="flex gap-6">
                 <Link href="/support">
