@@ -83,10 +83,10 @@ export const Sidebar = () => {
                                 </Button>
                             </Link>
                         </div>
-                        <div id="files" className="flex flex-col gap-2 max-h-[calc(100vh-240px)] overflow-y-auto hide-scrollbar">
+                        <div id="files" className="flex flex-col max-h-[calc(100vh-240px)] overflow-y-auto hide-scrollbar">
                             {
                                 files.map((file, index) => (
-                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center justify-between p-1.5 py-2 overflow-hidden text-[15px] font-medium cursor-pointer hover:bg-zinc-200">
+                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center justify-between p-1.5 py-2 overflow-hidden text-[15px] font-medium cursor-pointer hover:bg-zinc-200 border-b ">
                                         <div className="flex-1 mr-1 flex pt-[2px]">
                                             <MessageSquare className="h-4" color="#7d7d7d" />
                                         </div>

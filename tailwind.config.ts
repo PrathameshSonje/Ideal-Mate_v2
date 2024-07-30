@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -72,6 +72,10 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'paper': "url('/paper-texture.jpeg')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

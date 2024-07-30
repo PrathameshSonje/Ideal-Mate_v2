@@ -77,17 +77,17 @@ export const FilesCard = () => {
                     </Button>
                 </Link>
             </div>
-            <div className="flex flex-col gap-4 w-full mt-10 overflow-y-auto hide-scrollbar max-h-[calc(100vh-440px)]">
+            <div className="flex flex-col gap-2 w-full mt-10 overflow-y-auto hide-scrollbar max-h-[calc(100vh-440px)]">
                 {files.map((file, index) => {
 
                     const fileDate = parse(file.date, 'dd-MM-yy', new Date());
                     const timeAgo = formatDistanceToNow(fileDate, { addSuffix: true });
 
                     return (
-                        <div key={index} className="text-[15px] flex border-b items-center justify-between cursor-pointer">
+                        <div key={index} className="text-[15px] flex border-b pb-2 items-center justify-between cursor-pointer">
                             <div className="flex-1 gap-3 flex pt-[2px] items-center">
                                 <MessageSquare className="h-4" color="#7d7d7d" />
-                                <span className="font-medium text-zinc-800">{file.fileName}</span>
+                                <span className="font-medium text-zinc-800 hover:text-zinc-600">{file.fileName}</span>
                             </div>
                             <div className="flex w-[250px] text-sm justify-between items-center">
                                 <span className="text-zinc-500">{file.size}</span>
