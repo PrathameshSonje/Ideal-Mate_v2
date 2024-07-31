@@ -1,4 +1,4 @@
-import { ChatWrapper } from "@/components/chat/chatWrapper";
+import ChatWrapper from "@/components/chat/chatWrapper";
 import { PdfView } from "@/components/Pdf/PdfView";
 
 const ChatPage = () => {
