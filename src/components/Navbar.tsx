@@ -1,23 +1,66 @@
 import Link from "next/link"
-import { ArrowUpRight, UserRound } from "lucide-react"
+import { ArrowUpRight, User } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { auth, signOut } from "../../auth"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { Button } from "./ui/button"
 
-export const Navbar = () => {
+
+export const Navbar = async () => {
+
+    const session = await auth();
+
     return (
         <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-800">
-            <span>The Mechanics of Nuclear Fission</span>
-            <div className="flex gap-6">
+            <span >The Mechanics of Nuclear Fission</span>
+            <div className="flex gap-6 items-center">
                 <Link href="/support">
                     <span>Support</span>
                 </Link>
                 <Link href="/pricing">
                     <div className="flex gap-1 items-center">
                         <span >Premium</span>
-                        <ArrowUpRight className="h-[18px] w-[18px]"/>
+                        <ArrowUpRight className="h-[18px] w-[18px]" />
                     </div>
                 </Link>
-                <div className="cursor-pointer flex items-center justify-center">
-                    <UserRound className="h-[18px] w-[18px]"/>
-                </div>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <div className="cursor-pointer hover:bg-zinc-200 p-2 rounded-md">
+                            <User className="h-[20px] w-[20px]" strokeWidth={2} />
+                            {/* <Avatar className="h-8 w-8 border-2 border-orange-400">
+                            <AvatarImage src={session?.user?.image!} />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar> */}
+                        </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-70 mr-2">
+                        {
+                            session?.user ? (
+                                <div className="flex flex-col justify-center items-center gap-4">
+                                    <p>{session?.user?.name}</p>
+                                    <p>{session?.user?.email}</p>
+                                    <form action={ async () => {
+                                        "use server"
+                                        
+                                        await signOut();
+                                    }}>
+                                        <Button type="submit">
+                                            Signout
+                                        </Button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div className="flex flex-col justify-center items-center gap-4">
+                                    <Link href="/auth/login">SignIn</Link>
+                                </div>
+                            )
+                        }
+                    </PopoverContent>
+                </Popover>
             </div>
         </div>
     )

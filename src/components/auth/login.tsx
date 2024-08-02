@@ -25,7 +25,7 @@ export const LoginForm = () => {
             <CardWrapper
                 headerLabel="Welcome Back"
                 backButtonLabel="Dont have an account? "
-                backButtonHref="/"
+                backButtonHref="/auth/register"
             >
                 <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-2">

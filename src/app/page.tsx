@@ -1,7 +1,11 @@
 import Image from "next/image";
+import { auth } from "../../auth";
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await auth();
+
   return (
-    <div>Hello there</div>
+    <div>{session?.user?.email}</div>
   )
 }

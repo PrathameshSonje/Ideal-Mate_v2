@@ -3,6 +3,7 @@
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
 import { Button } from "../ui/button"
+import { handleOAuth } from "@/actions/login"
 
 const Social = () => {
     return (
@@ -11,7 +12,7 @@ const Social = () => {
                 variant="outline"
                 className="w-full h-10 border-0 shadow-md"
                 size="lg"
-                onClick={() => {}}
+                onClick={() => {handleOAuth("google")}}
             >
                 <FcGoogle className="h-5 w-5"/>
             </Button>
@@ -19,7 +20,7 @@ const Social = () => {
                 variant="outline"
                 className="w-full h-10 border-0 shadow-md"
                 size="lg"
-                onClick={() => {}}
+                onClick={() => {handleOAuth("github")}}
             >
                 <FaGithub className="h-5 w-5"/>
             </Button>

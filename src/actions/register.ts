@@ -31,13 +31,11 @@ export const registerUser = async (formData: z.infer<typeof RegisterSchema>) => 
         }
     })
 
-    
-
     // try {
-    //     await signIn("credentials", {
-    //         email,
-    //         redirectTo: '/'
-    //     })
+        // await signIn("credentials", {
+        //     email,
+        //     redirectTo: '/'
+        // })
     // } catch (error) {
     //     if (error instanceof AuthError) {
     //         switch (error.type) {

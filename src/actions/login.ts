@@ -29,3 +29,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         throw error;
     }
 }
+
+export const handleOAuth = async (provider: "google" | "github") => {
+    await signIn(provider, {
+        redirectTo: "/"
+    })
+}

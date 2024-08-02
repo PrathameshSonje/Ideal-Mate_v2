@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased h-screen`}>
+      <body className={`${inter.className}  antialiased h-screen`}>
         <div className="flex">
           <Sidebar />
           <div className="w-full flex flex-col">
