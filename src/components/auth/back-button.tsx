@@ -13,12 +13,12 @@ const BackButton = ({
 }: BackButtonProps) => {
     return (
         <div className="w-full font-normal text-sm flex items-center justify-center">
-            <p>{label}
-                <span className="font-semibold text-zinc-700">
+            <p>
+                <span className="font-semibold text-zinc-700 hover:border-b hover:border-zinc-700">
                     <Link
                         href={href}
                     >
-                        Sign In
+                        {label}
                     </Link>
                 </span>
             </p>

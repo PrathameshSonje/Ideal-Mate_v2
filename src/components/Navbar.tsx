@@ -19,11 +19,14 @@ export const Navbar = async () => {
             <span >The Mechanics of Nuclear Fission</span>
             <div className="flex gap-6 items-center">
                 <Link href="/support">
-                    <span>Support</span>
+                    <div className="flex gap-1 items-center hover:border-b hover:border-zinc-700">
+                        <span>Support</span>
+                        <ArrowUpRight className="h-[18px] w-[18px]" />
+                    </div>
                 </Link>
                 <Link href="/pricing">
-                    <div className="flex gap-1 items-center">
-                        <span >Premium</span>
+                    <div className="flex gap-1 items-center hover:border-b hover:border-zinc-700">
+                        <span>Premium</span>
                         <ArrowUpRight className="h-[18px] w-[18px]" />
                     </div>
                 </Link>
@@ -43,10 +46,12 @@ export const Navbar = async () => {
                                 <div className="flex flex-col justify-center items-center gap-4">
                                     <p>{session?.user?.name}</p>
                                     <p>{session?.user?.email}</p>
-                                    <form action={ async () => {
+                                    <form action={async () => {
                                         "use server"
-                                        
-                                        await signOut();
+
+                                        await signOut({
+                                            redirectTo: "/"
+                                        });
                                     }}>
                                         <Button type="submit">
                                             Signout
@@ -61,7 +66,7 @@ export const Navbar = async () => {
                         }
                     </PopoverContent>
                 </Popover>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }

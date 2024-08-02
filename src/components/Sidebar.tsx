@@ -46,8 +46,8 @@ export const Sidebar = () => {
                         </div>
                         <div className="flex flex-col gap-2 max-h-[calc(100vh-235px)] overflow-y-auto hide-scrollbar">
                             {
-                                files.map((file) => (
-                                    <div className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200">
+                                files.map((file, index) => (
+                                    <div key={index} className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200">
                                         {file.fileName[0]}
                                     </div>
                                 ))

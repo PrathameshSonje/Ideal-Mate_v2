@@ -33,7 +33,7 @@ export const CardWrapper = ({
                 {children}
             </CardContent>
             <CardFooter>
-                <Social />
+                {showSocial && <Social />}
             </CardFooter>
             <CardFooter>
                 <BackButton
