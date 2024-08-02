@@ -1,3 +1,5 @@
+'use server'
+
 import { DEFAULT_LOGIN_REDIRECT } from "@/lib/middleware/routes"
 import { signIn } from "../../auth"
 

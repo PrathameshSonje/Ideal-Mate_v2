@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { useSearchParams } from "next/navigation";
 import { FormErrorBox } from "./errorBox";
 import { login } from "@/actions/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FormFields = z.infer<typeof LoginSchema>
 
@@ -21,8 +21,10 @@ export const LoginForm = () => {
     });
 
     const params = useSearchParams();
-    var errorMessage = params.get("error")
-    if(errorMessage === "OAuthAccountNotLinked") setError("This email is used with another provider")
+
+    useEffect(() => {
+        setError(params.get("error"))
+    }, [])
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         const response = await login(data);
@@ -51,16 +53,16 @@ export const LoginForm = () => {
                         </div>
                     </div>
                     <div>
-                            <label htmlFor="password" className="text-sm font-medium text-zinc-700">Password</label>
-                            <input
-                                {...register("password")}
-                                id="password"
-                                type="password"
-                                className="w-full 10 rounded-sm p-2 border outline-none text-sm font-medium" />
-                            {errors.password && (
-                                <div className="text-red-500 text-xs">{errors.password.message}</div>
-                            )}
-                        </div>
+                        <label htmlFor="password" className="text-sm font-medium text-zinc-700">Password</label>
+                        <input
+                            {...register("password")}
+                            id="password"
+                            type="password"
+                            className="w-full 10 rounded-sm p-2 border outline-none text-sm font-medium" />
+                        {errors.password && (
+                            <div className="text-red-500 text-xs">{errors.password.message}</div>
+                        )}
+                    </div>
                     {
                         error && (
                             <div>
