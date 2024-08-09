@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/helpers/utils"
 import React from "react"
 
 export const CardWrapper = ({ children, className, heading }: { children: React.ReactNode, className?: string, heading?: String }) => {

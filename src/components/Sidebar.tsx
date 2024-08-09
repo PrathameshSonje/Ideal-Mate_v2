@@ -4,6 +4,8 @@ import { useState } from "react"
 import { ChevronsLeft, Menu, Plus, MessageSquare, ArrowUpRight } from "lucide-react"
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { FaRegMessage } from "react-icons/fa6";
+import UploadButton from "./home/uploadButton";
 
 export const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(true);
@@ -38,11 +40,8 @@ export const Sidebar = () => {
                             <Menu className="h-[16px] w-[16xpx]" color="#7d7d7d" onClick={handleOnClick} strokeWidth={2.75} />
                         </div>
                         <div className="h-[44px] w-[44px] my-5">
-                            <Link href="/upload">
-                                <Button className="h-full w-full" size="icon">
-                                    <Plus className="h-[16px] w-[16xpx]" strokeWidth={3} />
-                                </Button>
-                            </Link>
+                            <UploadButton className="h-full w-full" size="icon">
+                            </UploadButton>
                         </div>
                         <div className="flex flex-col gap-2 max-h-[calc(100vh-235px)] overflow-y-auto hide-scrollbar">
                             {
@@ -76,21 +75,18 @@ export const Sidebar = () => {
                             <ChevronsLeft className="h-[20px] w-[20px]" color="#7d7d7d" onClick={handleOnClick} />
                         </div>
                         <div id="upload_button" className="h-[44px] w-full my-5">
-                            <Link href="/upload">
-                                <Button className="w-full">
-                                    <Plus className="h-[16px] w-[16xpx]" strokeWidth={2.5} />
-                                    Import
-                                </Button>
-                            </Link>
+                            <UploadButton className="w-full">
+                                Import
+                            </UploadButton>
                         </div>
                         <div id="files" className="flex flex-col max-h-[calc(100vh-240px)] overflow-y-auto hide-scrollbar">
                             {
                                 files.map((file, index) => (
-                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center justify-between p-1.5 py-2 overflow-hidden text-[15px] font-medium cursor-pointer hover:bg-zinc-200 border-b ">
-                                        <div className="flex-1 mr-1 flex pt-[2px]">
-                                            <MessageSquare className="h-4" color="#7d7d7d" />
+                                    <div key={index} className="h-[44px] shrink-0 w-full rounded-sm flex items-center gap-1 justify-between px-2.5 py-2 overflow-hidden text-[15px] font-medium cursor-pointer hover:bg-zinc-200">
+                                        <div className="flex-1 mr-2.5 flex pt-[2px]">
+                                            <FaRegMessage className="text-zinc-500" />
                                         </div>
-                                        <div className="flex-grow text-zinc-700 hover:text-zinc-900 overflow-hidden whitespace-nowrap text-ellipsis">
+                                        <div className="flex-grow text-zinc-800 hover:text-zinc-600 overflow-hidden whitespace-nowrap text-ellipsis">
                                             {file.fileName}
                                         </div>
                                     </div>

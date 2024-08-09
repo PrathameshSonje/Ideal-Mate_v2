@@ -8,7 +8,7 @@ import { AuthError } from 'next-auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/lib/middleware/routes'
 import bcrypt from 'bcryptjs'
 
-export const registerUser = async (formData: z.infer<typeof RegisterSchema>) => {    
+export const registerUser = async (formData: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(formData);
     if (!validatedFields) return { error: "Invalid fields" };
 

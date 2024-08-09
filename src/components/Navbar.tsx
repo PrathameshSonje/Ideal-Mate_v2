@@ -15,17 +15,23 @@ export const Navbar = async () => {
     const session = await auth();
 
     return (
-        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-800">
+        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-700">
             <span >The Mechanics of Nuclear Fission</span>
             <div className="flex gap-6 items-center">
+                <Link href="/dashboard">
+                    <div className="flex gap-1 items-center hover:text-orange-500">
+                        <span>Dashboard</span>
+                        <ArrowUpRight className="h-[18px] w-[18px]" />
+                    </div>
+                </Link>
                 <Link href="/support">
-                    <div className="flex gap-1 items-center hover:border-b hover:border-zinc-700">
+                    <div className="flex gap-1 items-center hover:text-orange-500">
                         <span>Support</span>
                         <ArrowUpRight className="h-[18px] w-[18px]" />
                     </div>
                 </Link>
                 <Link href="/pricing">
-                    <div className="flex gap-1 items-center hover:border-b hover:border-zinc-700">
+                    <div className="flex gap-1 items-center hover:text-orange-500">
                         <span>Premium</span>
                         <ArrowUpRight className="h-[18px] w-[18px]" />
                     </div>

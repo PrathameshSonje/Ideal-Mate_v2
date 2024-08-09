@@ -8,6 +8,10 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
+export interface InputProps {
+    handleChange: (keyword: "DATE" | "NAME") => void
+}
+
 export const SortBy = () => {
     return (
         <Select>

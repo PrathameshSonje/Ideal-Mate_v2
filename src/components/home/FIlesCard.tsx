@@ -5,6 +5,9 @@ import Link from "next/link"
 import { SearchBar } from "./SearchBar"
 import { SortBy } from "./SortBy"
 import { formatDistanceToNow, parse } from 'date-fns';
+import UploadButton from "./uploadButton"
+import { useCallback, useState } from "react"
+import { FaRegMessage } from "react-icons/fa6"
 
 export const FilesCard = () => {
 
@@ -64,21 +67,35 @@ export const FilesCard = () => {
         date: "26-06-24"
     }]
 
+    const [userFiles, setUserFiles] = useState(files);
+
+    const searchFile = useCallback((keyword: string) => {
+        setUserFiles(() => {
+            const newFiles = userFiles.filter(({ fileName }) => {
+                return fileName.toLowerCase().includes(keyword.toLowerCase());
+            })
+
+            return newFiles;
+        })
+    }, [])
+
+    const sortFile = useCallback((key: "DATE" | "NAME") => {
+        setUserFiles(() => {
+            return key === "DATE" ? sortFilesByDate(userFiles) : sortFilesByName(userFiles);
+        })
+    }, [])
 
     return (
-        <CardWrapper className="grow">
+        <CardWrapper className="h-[434px]">
             <div className="flex justify-between gap-2 text-zinc-600 text-sm">
-                <SearchBar className="w-full" />
+                <SearchBar className="w-full" handleChange={searchFile} />
                 <SortBy />
-                <Link href="/upload">
-                    <Button className="h-[35px]">
-                        <Plus className="h-[16px] w-[16xpx]" strokeWidth={2.5} />
-                        Import
-                    </Button>
-                </Link>
+                <UploadButton className="h-[36px]">
+                    Import
+                </UploadButton>
             </div>
-            <div className="flex flex-col gap-2 w-full mt-10 overflow-y-auto hide-scrollbar max-h-[calc(100vh-440px)]">
-                {files.map((file, index) => {
+            <div className="flex flex-col gap-2 w-full mt-10 overflow-y-auto hide-scrollbar max-h-[310px]">
+                {userFiles.map((file, index) => {
 
                     const fileDate = parse(file.date, 'dd-MM-yy', new Date());
                     const timeAgo = formatDistanceToNow(fileDate, { addSuffix: true });
@@ -86,13 +103,13 @@ export const FilesCard = () => {
                     return (
                         <div key={index} className="text-[15px] flex border-b pb-2 items-center justify-between cursor-pointer">
                             <div className="flex-1 gap-3 flex pt-[2px] items-center">
-                                <MessageSquare className="h-4" color="#7d7d7d" />
+                                <FaRegMessage className="text-zinc-500" />
                                 <span className="font-medium text-zinc-800 hover:text-zinc-600">{file.fileName}</span>
                             </div>
                             <div className="flex w-[250px] text-sm justify-between items-center">
                                 <span className="text-zinc-500">{file.size}</span>
                                 <span className="text-zinc-500">{timeAgo}</span>
-                                <div className="text-[#7d7d7d] hover:text-red-500"><Trash className="h-4"/></div>
+                                <div className="text-[#7d7d7d] hover:text-red-500"><Trash className="h-4" /></div>
                             </div>
                         </div>
                     )

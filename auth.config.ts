@@ -11,27 +11,27 @@ export default {
         authorize: async (credentials) => {
             const validatedFields = LoginSchema.safeParse(credentials);
 
-            if(validatedFields.success) {
+            if (validatedFields.success) {
                 const { email, password } = validatedFields.data;
-    
+
                 const userData = await getUserbyEmail(email);
-                if(!userData) throw new Error("User not found!");
-                if(!userData.password) throw new Error("No password associated with this account")
-    
+                if (!userData) throw new Error("User not found!");
+                if (!userData.password) throw new Error("No password associated with this account")
+
                 const passwordsMatch = await bcrypt.compare(
                     password,
                     userData.password
                 )
-    
+
                 const user = {
                     id: JSON.stringify(userData.id),
                     email: userData.email,
                     name: userData.name
                 }
-    
-                if(passwordsMatch) return user;
+
+                if (passwordsMatch) return user;
             }
-    
+
             throw new Error("User not found");
         }
     }),
