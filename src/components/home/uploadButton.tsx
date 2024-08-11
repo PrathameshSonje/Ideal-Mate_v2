@@ -13,7 +13,7 @@ import { CustomInput } from "../ui/customInput"
 import clsx from "clsx"
 
 const UploadDropzone = () => {
-    const router = useRouter()
+    const router = useRouter();
 
     const [isUploading, setIsUploading] = useState<boolean | null>(null)
     const [uploadProgress, setuploadProgress] = useState<number>(0)
@@ -55,7 +55,7 @@ const UploadDropzone = () => {
             const [fileResponse] = res
 
             const key = fileResponse?.key
-
+            
             if (!key) {
                 return toast({
                     title: 'someting went wrong',

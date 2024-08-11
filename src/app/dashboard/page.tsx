@@ -1,24 +1,19 @@
-'use client'
-
 import { FilesCard } from "@/components/home/FIlesCard";
 import { InsightsCard } from "@/components/home/InsightsCard";
 import { TodoCard } from "@/components/home/TodoCard";
+import { getUserbyEmail } from "@/lib/data/user";
+import { auth } from "../../../auth";
 
-const Page = () => {
+const Page = async () => {
+    const session = await auth();
 
-    const User = {
-        id: Number,
-        name: "Prathamesh Sonje",
-        imports: 7,
-        generations: 163,
-        plan: "regular"
-    }
+    const User = await getUserbyEmail(session?.user?.email!);
 
     return (
         <div id="dashboard" className="w-full h-full flex items-center justify-center p-12">
             <div className="flex gap-3">
                 <div className="flex flex-col gap-3">
-                    <InsightsCard name={User.name} imports={User.imports} generations={User.generations} plan={User.plan} />
+                    <InsightsCard User={User!}/>
                     <FilesCard />
                 </div>
                 <TodoCard />

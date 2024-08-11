@@ -3,6 +3,8 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
+import { SidebarV2 } from "@/components/SidebarV2";
+import Providers from "@/components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
@@ -19,17 +21,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}  antialiased h-screen`}>
-        <div className="flex">
-          <Sidebar />
-          <div className="w-full flex flex-col">
-            <Navbar />
-            <div className="flex-grow">
-              {children}
+      <Providers>
+        <body className={`${inter.className}  antialiased h-screen`}>
+          <div className="flex">
+            <SidebarV2 />
+            <div className="w-full flex flex-col">
+              <Navbar />
+              <div className="flex-grow">
+                {children}
+              </div>
             </div>
           </div>
-        </div>
-      </body>
+        </body>
+      </Providers>
     </html>
   );
 }

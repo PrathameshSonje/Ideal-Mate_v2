@@ -32,12 +32,14 @@ export const Sidebar = () => {
     }
 
     return (
-        <div className="border-r h-screen ">
+        <div className="border-r h-screen">
             {collapsed ? (
                 <div className="w-[60px] px-2 flex flex-col h-full pb-4">
                     <div className="flex-1">
                         <div className="flex items-center justify-center h-[55px]">
-                            <Menu className="h-[16px] w-[16xpx]" color="#7d7d7d" onClick={handleOnClick} strokeWidth={2.75} />
+                            <div className="cursor-pointer hover:bg-zinc-200 p-2 flex items-center justify-center rounded-md h-[36px] w-[36px]" onClick={handleOnClick}>
+                                <Menu className="h-[16px] w-[16xpx]" color="#7d7d7d" />
+                            </div>
                         </div>
                         <div className="h-[44px] w-[44px] my-5">
                             <UploadButton className="h-full w-full" size="icon">
@@ -62,17 +64,19 @@ export const Sidebar = () => {
                     </Link>
                 </div>
             ) : (
-                <div className="w-[250px] px-2.5 flex flex-col pb-4 h-full">
+                <div className="w-[260px] px-3.5 flex flex-col pb-4 h-full ">
                     <div className="flex-1">
                         <div className="flex items-center justify-between h-[55px]">
                             <div id="logo" className="flex gap-2 items-center justify-center">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                {/* <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect y="12" width="16.9706" height="16.9706" transform="rotate(-45 0 12)" fill="#FF7A00" />
                                     <path d="M11.9764 19.9768L5.67772 12.7037H18.2751L11.9764 19.9768Z" fill="white" />
-                                </svg>
-                                <span className="font-bold text-[18px] text-zinc-800">Ideal Mate.</span>
+                                </svg> */}
+                                <span className="font-bold text-[20px] rounded-sm font-mono bg-orange-200 text-zinc-800">Ideal Mate.</span>
                             </div>
-                            <ChevronsLeft className="h-[20px] w-[20px]" color="#7d7d7d" onClick={handleOnClick} />
+                            <div className="cursor-pointer hover:bg-zinc-200 p-2 rounded-md" onClick={handleOnClick} >
+                                <ChevronsLeft className="h-[20px] w-[20px]" color="#7d7d7d" />
+                            </div>
                         </div>
                         <div id="upload_button" className="h-[44px] w-full my-5">
                             <UploadButton className="w-full">

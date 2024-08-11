@@ -1,3 +1,5 @@
+"use client"
+
 import { Checkbox } from "../ui/checkbox"
 import { CardWrapper } from "./CardWrapper"
 import { ListPlus } from "lucide-react"

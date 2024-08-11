@@ -20,6 +20,8 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
+  imports       Int       @default(0)
+  generations   Int       @default(0)
   accounts      Account[]
 
   createdAt DateTime @default(now())
@@ -79,6 +81,7 @@ model File {
 
   url     String
   key     String
+  size    Int
   message Message[]
 
   createAt  DateTime @default(now())

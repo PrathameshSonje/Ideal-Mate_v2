@@ -1,11 +1,13 @@
 import { z } from 'zod'
+import prisma from '@/db/prismaClient'
+import type { File as PrismaFile, User as PrismaUser } from '@prisma/client';
 
-export interface userInterface {
-    name: string,
-    imports: number,
-    generations: number,
-    plan: "regular" | "premium"
-}
+export type File =  Omit<PrismaFile, 'createAt' | 'updatedAt'> & {
+    createAt: string;
+    updatedAt: string;
+  };
+  
+export type User = PrismaUser
 
 export const RegisterSchema = z.object({
     firstName: z.string().min(1, { message: "First name is required" }),
