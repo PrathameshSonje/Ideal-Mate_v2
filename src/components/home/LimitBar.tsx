@@ -23,9 +23,9 @@ export const LimitBar = ({
 
 
     return (
-        <div id="LimitBar" className="text-sm font-medium text-zinc-500 flex flex-col mt-[2px]">
+        <div id="LimitBar" className="text-sm font-medium text-zinc-500 mt-[2px] grow invisible md:visible">
             <label htmlFor="bar">{label}</label>
-            <div id="bar" className="bg-zinc-200 w-60 h-[10px] rounded-sm overflow-hidden">
+            <div id="bar" className="bg-zinc-200 h-[10px] rounded-sm overflow-hidden">
                 <div
                     id="limit"
                     className="h-[10px] bg-orange-500"

@@ -5,11 +5,23 @@ import { TRPCError } from '@trpc/server';
 import { auth } from '../../auth';
 
 export const appRouter = router({
+    getUser:
+        privateProcedure.query(async ({ ctx }) => {
+            const { userId } = ctx;
+            const User = await prisma.user.findFirst({
+                where: {
+                    id: userId,
+                }
+            })
+
+            return User
+
+        }),
+
     getUserFiles:
         privateProcedure.query(async ({ ctx }) => {
             try {
                 const { userId } = ctx;
-                console.log(userId);
                 const files = await prisma.file.findMany({
                     where: {
                         userId: userId

@@ -126,7 +126,7 @@ const UploadButton = ({ className, children, size }: { className: string, childr
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className={className} size={size}>
+                <Button className={className} size={size} title="Import Documents">
                     <Plus className="h-[16px] w-[16xpx]" strokeWidth={2.5} />
                     {children}
                 </Button>

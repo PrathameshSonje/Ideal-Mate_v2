@@ -16,7 +16,7 @@ const options = {
 };
 
 interface PdfViewProps {
-    fileUrl: string | File
+    fileUrl: string
 }
 
 export const PdfView = ({ fileUrl }: PdfViewProps) => {

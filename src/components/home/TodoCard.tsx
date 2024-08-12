@@ -1,5 +1,3 @@
-"use client"
-
 import { Checkbox } from "../ui/checkbox"
 import { CardWrapper } from "./CardWrapper"
 import { ListPlus } from "lucide-react"
@@ -21,7 +19,7 @@ export const TodoCard = () => {
     }]
 
     return (
-        <CardWrapper className="w-[300px] grow">
+        <CardWrapper className="col-span-3">
             <div className="text-zinc-800 flex items-center justify-between">
                 <span className="font-bold text-xl">To Do's</span>
                 <ListPlus strokeWidth={1.2}/>

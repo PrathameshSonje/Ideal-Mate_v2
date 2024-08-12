@@ -7,36 +7,17 @@ import Link from "next/link";
 import { FaRegMessage } from "react-icons/fa6";
 import UploadButton from "./home/uploadButton";
 import SearchButton from "./ui/SearchButton";
+import { trpc } from "@/app/_trpc/client";
 
 export const SidebarV2 = () => {
-    const [collapsed, setCollapsed] = useState(true);
 
-    const files = [{
-        fileName: "The mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    },
-    {
-        fileName: "the mechanics of nuclear fission",
-        size: "4 mb"
-    }]
-
-    const handleOnClick = () => {
-        setCollapsed(!collapsed);
-    }
+    const { data: files, isLoading: isFilesLoading } = trpc.getUserFiles.useQuery();
 
     return (
-        <div className="w-[60px] items-center flex flex-col pb-4 border-r h-screen">
+        <div className="w-[60px] items-center flex flex-col pb-4 px-2 border-r h-screen">
             <div className="flex-1">
                 <div className="flex items-center justify-center h-[55px]">
-                    <div className="cursor-pointer hover:bg-zinc-200 p-2 flex items-center justify-center rounded-md h-[36px] w-[36px]" onClick={handleOnClick}>
+                    <div className="cursor-pointer hover:bg-zinc-200 p-2 flex items-center justify-center rounded-md h-[36px] w-[36px]">
                     </div>
                 </div>
                 <div className="h-[44px] w-[44px] my-5">
@@ -47,13 +28,19 @@ export const SidebarV2 = () => {
                     <SearchButton className="h-full w-full" size="icon">
                     </SearchButton>
                 </div>
-                <div className="flex flex-col gap-2 max-h-[calc(100vh-235px)] overflow-y-auto hide-scrollbar">
+                <div className="flex flex-col gap-2 max-h-[calc(100vh-280px)] overflow-y-auto hide-scrollbar">
                     {
-                        files.map((file, index) => (
-                            <div key={index} className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200">
-                                {file.fileName[0]}
-                            </div>
-                        ))
+                        files && (
+                            files.map((file) => (
+                                <Link key={file.id} href={`/chat/${file.id}`}>
+                                    <div
+                                        className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200"
+                                        title={file.name}>
+                                        {file.name[0]}
+                                    </div>
+                                </Link>
+                            ))
+                        )
                     }
                 </div>
             </div>

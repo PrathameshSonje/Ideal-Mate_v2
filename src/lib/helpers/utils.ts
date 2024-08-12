@@ -7,15 +7,17 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export function sortFilesByDate(files?: File[]){
+export function sortFilesByDate(files?: File): File {
   return files?.sort((a, b) => {
-    const dateA = new Date(a.updatedAt).getTime();
-    const dateB = new Date(b.updatedAt).getTime();
-    return dateA - dateB;
+    const dateA = new Date(a.createAt).getTime();
+    const dateB = new Date(b.createAt).getTime();
+    console.log("hi from sort files");
+    return dateB - dateA;
   });
 }
 
-export function sortFilesByName(files?: File[]){
+
+export function sortFilesByName(files?: File) {
   return files?.sort((a, b) => {
     return a.name.localeCompare(b.name);
   });

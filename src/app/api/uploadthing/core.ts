@@ -14,10 +14,8 @@ export const ourFileRouter = {
             // if (!session?.user || !session.user?.id) throw new Error('unauthorized')
             if (!session?.user) throw new UploadThingError("No user ID");
 
-            const user = await getUserbyEmail(session?.user?.email!);
-
             console.log("session from uploadthing middleware");
-            return { userId: user?.id };
+            return { userId: session?.user?.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
             await prisma.user.update({

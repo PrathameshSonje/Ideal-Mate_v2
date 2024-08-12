@@ -9,14 +9,16 @@ import {
 } from "@/components/ui/select"
 
 export interface InputProps {
-    handleChange: (keyword: "DATE" | "NAME") => void
+    handleChange: (keyword: string) => void
 }
 
-export const SortBy = () => {
+export const SortBy = ({ handleChange }: InputProps) => {
     return (
-        <Select>
+        <Select onValueChange={(value) => {
+            handleChange(value)
+        }}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by..."/>
+                <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

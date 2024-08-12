@@ -1,13 +1,11 @@
 import { z } from 'zod'
-import prisma from '@/db/prismaClient'
-import type { File as PrismaFile, User as PrismaUser } from '@prisma/client';
+import { AppRouter } from '@/server'
+import { inferRouterOutputs } from '@trpc/server'
 
-export type File =  Omit<PrismaFile, 'createAt' | 'updatedAt'> & {
-    createAt: string;
-    updatedAt: string;
-  };
-  
-export type User = PrismaUser
+type RouterOutput = inferRouterOutputs<AppRouter>
+
+export type File = RouterOutput['getUserFiles']
+export type User = RouterOutput['getUser']
 
 export const RegisterSchema = z.object({
     firstName: z.string().min(1, { message: "First name is required" }),
