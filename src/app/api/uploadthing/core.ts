@@ -2,7 +2,6 @@ import prisma from "@/db/prismaClient"
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { auth } from "../../../../auth";
 import { UploadThingError } from "uploadthing/server";
-import { getUserbyEmail } from "@/lib/data/user";
 
 const f = createUploadthing();
 

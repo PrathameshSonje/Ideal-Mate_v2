@@ -11,6 +11,7 @@ import { useToast } from "../ui/use-toast"
 import { useRouter } from "next/navigation"
 import { CustomInput } from "../ui/customInput"
 import clsx from "clsx"
+import { trpc } from "@/app/_trpc/client"
 
 const UploadDropzone = () => {
     const router = useRouter();
@@ -20,6 +21,16 @@ const UploadDropzone = () => {
 
     const { startUpload } = useUploadThing("pdfUploader")
     const { toast } = useToast()
+
+    const { mutate: startPolling } = trpc.getFile.useMutation(
+        {
+            onSuccess: (file) => {
+                router.push(`/chat/${file.id}`)
+            },
+            retry: true,
+            retryDelay: 500,
+        }
+    )
 
     const startSimulateProgress = () => {
         setuploadProgress(0)
@@ -55,7 +66,7 @@ const UploadDropzone = () => {
             const [fileResponse] = res
 
             const key = fileResponse?.key
-            
+
             if (!key) {
                 return toast({
                     title: 'someting went wrong',
@@ -67,11 +78,12 @@ const UploadDropzone = () => {
             clearInterval(progressInterval)
             setuploadProgress(100)
 
+            startPolling({ key })
         }}>
             {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <section>
                     <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-                        <CustomInput className="w-full" placeholder="Enter a Url" />
+                        <CustomInput className="w-full" placeholder="Website or link to a PDF   " />
                         <div className="border h-64 w-full border-dashed border-gray-300 rounded-sm overflow-hidden">
                             <div {...getRootProps()} className="flex items-center justify-center h-full w-full">
                                 <input {...getInputProps()} />

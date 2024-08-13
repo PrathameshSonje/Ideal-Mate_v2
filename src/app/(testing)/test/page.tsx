@@ -1,14 +1,29 @@
 "use client"
 
-import UploadButton from "@/components/home/uploadButton";
-import Dropzone from "react-dropzone"
+import React, { useState } from 'react';
 
-const TestPage = () => {
+function App() {
+    const [pdfBuffer, setPdfBuffer] = useState<ArrayBuffer | null>(null);
+
+    async function downloadPDF(url: string) {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const arrayBuffer = await blob.arrayBuffer();
+            setPdfBuffer(arrayBuffer);
+            console.log('PDF downloaded and stored in state.');
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+        }
+    }
+
+    const url = 'https://ncert.nic.in/textbook/pdf/lekl101.pdf';
+
     return (
         <div>
-            <UploadButton />
+            Testing Page
         </div>
-    )
+    );
 }
 
-export default TestPage;
+export default App;
