@@ -16,7 +16,7 @@ The Inter font family, created by Rasmus Andersson, is a highly versatile font t
             {
                 isUserMessage ? (
                     <div className="flex flex-col items-end gap-2">
-                        <div className="flex gap-2 text-sm text-zinc-400 items-center font-medium justify-center">
+                        <div className="flex gap-2 text-sm text-zinc-600 items-center font-semibold justify-center">
                             <span>Prathamesh Sonje</span>
                         </div>
                         <div className="bg-[#3C3C3C] text-slate-50 px-3 py-2 text-[15px] rounded-md max-w-[600px]">
@@ -25,7 +25,7 @@ The Inter font family, created by Rasmus Andersson, is a highly versatile font t
                     </div>
                 ) : (
                     <div className="flex flex-col items-start gap-2 max-w-[600px]">
-                        <div className="flex gap-1.5 text-sm items-center text-zinc-400 h-4 font-medium">
+                        <div className="flex gap-1.5 text-sm items-center text-zinc-600 h-4 font-semibold">
                             <div className="bg-green-500 h-3.5 w-3.5 rounded-full"></div>
                             <span>Ideal Mate.</span>
                         </div>

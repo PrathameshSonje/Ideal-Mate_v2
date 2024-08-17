@@ -8,9 +8,12 @@ export async function POST(request: NextRequest) {
             responseType: 'arraybuffer'
         })
 
+        const ContentTypeHeader = response.headers['content-type'];
+        const ContentType = ContentTypeHeader.split('/')[1].split(';')[0];
+        
         return new Response(response.data, {
             headers: {
-                'Content-Type': 'application/pdf',
+                'Content-Type': `${ContentType}`,
             }
         });
     } catch (error) {

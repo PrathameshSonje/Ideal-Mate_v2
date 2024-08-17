@@ -86,7 +86,30 @@ export const appRouter = router({
                 }
             })
 
-            return file
+            return file;
+        }),
+
+    uploadWebsite:
+        privateProcedure.input(z.object({
+            url: z.string().url()
+        })).mutation(async ({ ctx, input }) => {
+            const { userId } = ctx
+
+            const parsedUrl = new URL(input.url);
+            const fileName = `${parsedUrl.hostname}${parsedUrl.pathname}`;
+
+            const newFile = await prisma.file.create({
+                data: {
+                    key: "N/A",
+                    name: fileName,
+                    userId: userId,
+                    url: input.url,
+                    size: 0,
+                    uploadstatus: "PROCESSING"
+                }
+            })
+
+            return newFile;
         }),
 });
 

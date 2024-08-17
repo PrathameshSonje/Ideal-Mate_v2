@@ -1,27 +1,28 @@
-"use client"
-
+import { absoluteUrl } from '@/lib/helpers/utils';
 import React, { useState } from 'react';
 
-function App() {
-    const [pdfBuffer, setPdfBuffer] = useState<ArrayBuffer | null>(null);
+async function App() {
 
-    async function downloadPDF(url: string) {
-        try {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            const arrayBuffer = await blob.arrayBuffer();
-            setPdfBuffer(arrayBuffer);
-            console.log('PDF downloaded and stored in state.');
-        } catch (error) {
-            console.error('Error downloading PDF:', error);
-        }
-    }
+    const url = absoluteUrl("/api/download-pdf");
 
-    const url = 'https://ncert.nic.in/textbook/pdf/lekl101.pdf';
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: "https://en.wikipedia.org/wiki/India" }),
+    });
+
+    const htmlContent = await response.text();
 
     return (
         <div>
-            Testing Page
+            <iframe
+                srcDoc={htmlContent}
+                style={{ width: '100%', height: '100vh', border: 'none', pointerEvents:'none' }}
+                title="HTML Content"
+                className='bg-zinc-300'
+            ></iframe>
         </div>
     );
 }

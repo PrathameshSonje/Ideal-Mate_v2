@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from "@/lib/helpers/utils"
 import { ArrowRight, Loader2 } from "lucide-react"
 import { Button } from "./button"
@@ -34,6 +32,16 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
         }
     )
 
+    const { mutate: handleHTML } = trpc.uploadWebsite.useMutation(
+        {
+            onSuccess: (file) => {
+                router.push(`/chat/${file.id}`)
+            },
+            retry: true,
+            retryDelay: 500,
+        }
+    )
+
     const { handleSubmit, register, formState: { errors, isSubmitting } } = useForm<z.infer<typeof inputSchema>>({
         resolver: zodResolver(inputSchema)
     });
@@ -54,23 +62,30 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
             setError(errorMessage)
         }
 
-        const pdfBlob = await response.blob();
-        const pdfFile = new File([pdfBlob], 'document.pdf', { type: 'application/pdf' });
-        const res = await startUpload([pdfFile])
+        const header = response.headers.get("Content-Type");
 
-        if (!res) {
-            return toast({
-                title: 'someting went wrong',
-                description: 'Please try again later',
-                variant: 'destructive',
-            })
+        if (header == 'pdf') {
+            const pdfBlob = await response.blob();
+            const pdfFile = new File([pdfBlob], 'document.pdf', { type: 'application/pdf' });
+            const res = await startUpload([pdfFile])
+
+            if (!res) {
+                return toast({
+                    title: 'someting went wrong',
+                    description: 'Please try again later',
+                    variant: 'destructive',
+                })
+            }
+
+            const [fileResponse] = res
+            const key = fileResponse?.key
+
+            startPolling({ key })
+        } else if (header == 'html') {
+            handleHTML({ url })
+        } else {
+            setError("Not a valid format")
         }
-
-        const [fileResponse] = res
-        const key = fileResponse?.key
-
-        startPolling({ key })
-
     }
 
     return (

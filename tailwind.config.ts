@@ -75,7 +75,7 @@ const config = {
       backgroundImage: {
         'paper': "url('/paper-texture.jpeg')",
         'footer-texture': "url('/img/footer-texture.png')",
-      }
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

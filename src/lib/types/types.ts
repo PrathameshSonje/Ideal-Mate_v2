@@ -6,6 +6,7 @@ type RouterOutput = inferRouterOutputs<AppRouter>
 
 export type File = RouterOutput['getUserFiles']
 export type User = RouterOutput['getUser']
+export type SingleFile = RouterOutput['getFile']
 
 export const RegisterSchema = z.object({
     firstName: z.string().min(1, { message: "First name is required" }),

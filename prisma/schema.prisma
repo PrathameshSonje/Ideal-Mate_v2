@@ -81,7 +81,7 @@ model File {
 
   url     String
   key     String
-  size    Int
+  size    Int 
   message Message[]
 
   createAt  DateTime @default(now())

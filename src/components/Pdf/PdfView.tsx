@@ -45,7 +45,7 @@ export const PdfView = ({ fileUrl }: PdfViewProps) => {
     }, [windowSize])
 
     return (
-        <div className='flex flex-col h-full'>
+        <div className='flex flex-col h-full flex-1'>
             <div className='flex items-center justify-between px-2 gap-4 h-[40px] border-b font-semibold text-sm text-zinc-400'>
                 <ArrowLeft
                     className='h-5 w-5 cursor-pointer'

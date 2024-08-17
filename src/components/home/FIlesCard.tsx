@@ -32,7 +32,7 @@ export const FilesCard = (
 
     useEffect(() => {
         setFiles(userFiles);
-    }, [isFilesLoading])
+    }, [isFilesLoading, userFiles])
 
     const searchFile = useCallback((keyword: string) => {
         if (userFiles) {
@@ -67,14 +67,14 @@ export const FilesCard = (
                 {isFilesLoading ? (
                     <Skeleton count={8} className="min-h-[33px]" />
                 ) : (
-                    userFiles && Files?.map((file) => {
+                    userFiles && Files?.map((file,index) => {
 
                         const fileDate = new Date(file.createAt);
                         const timeAgo = formatDistanceToNow(fileDate, { addSuffix: true });
                         const fileSize = formatFileSize(file.size);
 
                         return (
-                            <div key={file.id} className="text-[15px] flex border-b pb-2 items-center justify-between">
+                            <div key={index} className="text-[15px] flex border-b pb-2 items-center justify-between">
                                 <Link href={`/chat/${file.id}`} className=" cursor-pointer">
                                     <div className="flex-1 gap-3 flex pt-[2px] items-center">
                                         <FaRegMessage className="text-zinc-500 shrink-0" />

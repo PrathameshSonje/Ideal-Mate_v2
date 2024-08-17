@@ -1,11 +1,13 @@
 import { trpc } from "@/app/_trpc/client";
 import ChatWrapper from "@/components/chat/chatWrapper";
 import { PdfView } from "@/components/Pdf/PdfView";
-import { getFileURL } from "@/lib/data/file";
 import { notFound, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { auth } from "../../../../auth";
 import { Loader2 } from "lucide-react";
+import { getFile } from "@/lib/data/file";
+import { absoluteUrl } from "@/lib/helpers/utils";
+import { WebsiteView } from "@/components/Pdf/websiteView";
 
 interface PageProps {
     params: {
@@ -19,21 +21,25 @@ const ChatPage = async ({ params }: PageProps) => {
 
     const session = await auth();
     const { fileid } = params;
-    const fileURL = await getFileURL(fileid, session?.user?.id!);
+    const file = await getFile(fileid, session?.user?.id!);
 
-    if (!fileURL) notFound();
+    if (!file) notFound();
+
+    //its a website
 
     return (
         <div className="flex h-full">
-            <div className="flex-1">
-                {!fileURL ? (
-                    <div className="w-full h-full flex items-center justify-center">
-                        <Loader2 className="animate-spin" />
-                    </div>
+            {!file ? (
+                <div className="w-full h-full flex items-center flex-1 justify-center">
+                    <Loader2 className="animate-spin" />
+                </div>
+            ) : (
+                file.key == "N/A" && file.size == 0 ? (
+                    <WebsiteView url={file.url} />
                 ) : (
-                    <PdfView fileUrl={fileURL!} />
-                )}
-            </div>
+                    <PdfView fileUrl={file.url} />
+                )
+            )}
             <div className="flex-1 border-l h-full max-h-[calc(100vh-55px)]">
                 <ChatWrapper />
             </div>
