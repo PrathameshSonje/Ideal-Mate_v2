@@ -97,7 +97,7 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
                     {...register("url")}
                     id="url"
                     type={type}
-                    className="flex-1 pl-1 pr-1 text-sm text-zinc-600 outline-none bg-transparent transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 w-full"
+                    className="flex-1 pl-1 pr-1 text-sm text-zinc-800 font-semibold outline-none bg-transparent transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 w-full"
                     {...props}
                 />
                 {errors.url && (

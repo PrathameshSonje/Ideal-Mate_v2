@@ -3,6 +3,11 @@ import { router, publicProcedure, privateProcedure } from './trpc';
 import prisma from '@/db/prismaClient';
 import { TRPCError } from '@trpc/server';
 import { auth } from '../../auth';
+import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { CheerioWebBaseLoader } from "@langchain/community/document_loaders/web/cheerio";
+import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf';
+import { getPineconeClient } from '@/lib/others/pinecone';
+import { PineconeStore } from '@langchain/pinecone';
 
 export const appRouter = router({
     getUser:
@@ -98,7 +103,7 @@ export const appRouter = router({
             const parsedUrl = new URL(input.url);
             const fileName = `${parsedUrl.hostname}${parsedUrl.pathname}`;
 
-            const newFile = await prisma.file.create({
+            const createdFile = await prisma.file.create({
                 data: {
                     key: "N/A",
                     name: fileName,
@@ -109,7 +114,52 @@ export const appRouter = router({
                 }
             })
 
-            return newFile;
+            try {
+                const loader = new CheerioWebBaseLoader(input.url);
+                const docs = await loader.load();
+                const textSplitter = new RecursiveCharacterTextSplitter({
+                    chunkSize: 500,
+                    chunkOverlap: 0,
+                });
+                const allSplits = await textSplitter.splitDocuments(docs);
+
+                const embeddings = new HuggingFaceInferenceEmbeddings({
+                    apiKey: process.env.HF_TOKEN,
+                    model: 'dunzhang/stella_en_1.5B_v5',
+                });
+
+                const pinecone = await getPineconeClient()
+                const pineconeIndex = pinecone.Index('ideal-mate-v2')
+                await PineconeStore.fromDocuments(
+                    allSplits,
+                    embeddings,
+                    {
+                        pineconeIndex,
+                        namespace: createdFile.id
+                    }
+                )
+
+                await prisma.file.update({
+                    data: {
+                        uploadstatus: 'SUCCESS',
+                    },
+                    where: {
+                        id: createdFile.id,
+                    },
+                })
+            } catch (error) {
+                await prisma.file.update({
+                    data: {
+                        uploadstatus: 'FAILED',
+                    },
+                    where: {
+                        id: createdFile.id,
+                    },
+                })
+                console.log(error);
+            }
+
+            return createdFile;
         }),
 });
 

@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={`${inter.className}  antialiased h-screen`}>
+        <body className={`${inter.className} font-sans  antialiased h-screen`}>
           <div className="flex">
             <SidebarV2 />
             <div className="w-full flex flex-col">

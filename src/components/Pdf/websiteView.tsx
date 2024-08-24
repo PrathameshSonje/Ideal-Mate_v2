@@ -1,6 +1,7 @@
 import { absoluteUrl } from '@/lib/helpers/utils';
 import React from 'react'
 
+//TODO: sanitize the html, prevent interaction with the iframe
 
 export const WebsiteView = async ({ url }: { url: string }) => {
     const proxy_url = absoluteUrl("/api/download-pdf");
