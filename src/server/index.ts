@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { TypeOf, z } from 'zod';
 import { router, publicProcedure, privateProcedure } from './trpc';
 import prisma from '@/db/prismaClient';
 import { TRPCError } from '@trpc/server';
@@ -8,6 +8,7 @@ import { CheerioWebBaseLoader } from "@langchain/community/document_loaders/web/
 import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf';
 import { getPineconeClient } from '@/lib/others/pinecone';
 import { PineconeStore } from '@langchain/pinecone';
+import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query';
 
 export const appRouter = router({
     getUser:
@@ -161,6 +162,71 @@ export const appRouter = router({
 
             return createdFile;
         }),
+
+    getFileUploadStatus:
+        privateProcedure.input(z.object({
+            fileId: z.string()
+        })).query(async ({ input, ctx }) => {
+            const file = await prisma.file.findFirst({
+                where: {
+                    id: input.fileId,
+                    userId: ctx.userId
+                }
+            })
+
+            if (!file) return { status: 'PENDING' as const }
+
+            return { status: file.uploadstatus }
+        }),
+
+    getFileMessages: privateProcedure.input(
+        z.object({
+            limit: z.number().min(1).max(100).nullish(),
+            cursor: z.string().nullish(),
+            fileId: z.string()
+        })).query(async ({ ctx, input }) => {
+            const { userId } = ctx
+            const { fileId, cursor } = input
+            const limit = input.limit ?? INFINITE_QUERY_LIMIT
+
+
+            const file = prisma.file.findFirst({
+                where: {
+                    id: fileId,
+                    userId
+                }
+            })
+
+            if (!file) throw new TRPCError({ code: 'NOT_FOUND' })
+
+            const messages = await prisma.message.findMany({
+                take: limit + 1,
+                where: {
+                    fileId
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                },
+                cursor: cursor ? { id: cursor } : undefined,
+                select: {
+                    id: true,
+                    isUserMessage: true,
+                    createdAt: true,
+                    text: true
+                }
+            })
+
+            let nextCursor: typeof cursor | undefined = undefined
+            if (messages.length > limit) {
+                const nextItem = messages.pop()
+                nextCursor = nextItem?.id
+            }
+
+            return {
+                messages,
+                nextCursor
+            }
+        })
 });
 
 // Export type router type signature,

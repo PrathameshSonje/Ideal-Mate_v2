@@ -38,3 +38,16 @@ export function formatFileSize(bytes: number) {
   const formattedSize = parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
   return `${formattedSize} ${sizes[i]}`;
 }
+
+export class StreamingResponse extends Response {
+
+  constructor( res: ReadableStream<any>, init?: ResponseInit ) {
+    super(res as any, {
+      ...init,
+      status: 200,
+      headers: {
+        ...init?.headers,
+      },
+    });
+  }
+}

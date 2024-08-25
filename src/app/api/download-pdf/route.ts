@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export const POST = async (request: NextRequest) => {
     try {
         const body = await request.json()
         const response = await axios.get(body.url, {
@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
         const ContentTypeHeader = response.headers['content-type'];
         const ContentType = ContentTypeHeader.split('/')[1].split(';')[0];
-        
+
         return new Response(response.data, {
             headers: {
                 'Content-Type': `${ContentType}`,

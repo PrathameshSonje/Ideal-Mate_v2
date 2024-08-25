@@ -41,7 +41,7 @@ const ChatPage = async ({ params }: PageProps) => {
                 )
             )}
             <div className="flex-1 border-l h-full max-h-[calc(100vh-55px)]">
-                <ChatWrapper />
+                <ChatWrapper fileId={fileid} />
             </div>
         </div>
     )
