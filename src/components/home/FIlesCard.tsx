@@ -1,15 +1,13 @@
-import { Loader2, MessageSquare, Plus, Trash } from "lucide-react"
-import { Button } from "../ui/button"
+import { Loader2, Trash } from "lucide-react"
 import { CardWrapper } from "./CardWrapper"
 import Link from "next/link"
 import { SearchBar } from "./SearchBar"
 import { SortBy } from "./SortBy"
-import { formatDistanceToNow, parse } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import UploadButton from "./uploadButton"
 import { useCallback, useEffect, useState } from "react"
 import { FaRegMessage } from "react-icons/fa6"
 import { formatFileSize, sortFilesByDate, sortFilesByName } from "@/lib/helpers/utils"
-import { trpc } from "@/app/_trpc/client"
 import { File as FileType } from "@/lib/types/types"
 import Skeleton from "react-loading-skeleton"
 
@@ -67,7 +65,7 @@ export const FilesCard = (
                 {isFilesLoading ? (
                     <Skeleton count={8} className="min-h-[33px]" />
                 ) : (
-                    userFiles && Files?.map((file,index) => {
+                    userFiles && Files?.map((file, index) => {
 
                         const fileDate = new Date(file.createAt);
                         const timeAgo = formatDistanceToNow(fileDate, { addSuffix: true });

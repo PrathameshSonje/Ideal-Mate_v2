@@ -1,5 +1,6 @@
 import { absoluteUrl } from '@/lib/helpers/utils';
 import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 async function App() {
 
@@ -17,12 +18,7 @@ async function App() {
 
     return (
         <div>
-            <iframe
-                srcDoc={htmlContent}
-                style={{ width: '100%', height: '100vh', border: 'none', pointerEvents:'none' }}
-                title="HTML Content"
-                className='bg-zinc-300'
-            ></iframe>
+            <Skeleton />
         </div>
     );
 }

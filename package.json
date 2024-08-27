@@ -14,6 +14,7 @@
     "@huggingface/inference": "^2.8.0",
     "@langchain/community": "^0.2.28",
     "@langchain/pinecone": "^0.0.9",
+    "@mantine/hooks": "^7.12.1",
     "@pinecone-database/pinecone": "^3.0.1",
     "@prisma/client": "^5.17.0",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -61,6 +62,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.14",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -39,27 +39,27 @@ export const POST = async (request: NextRequest) => {
     })
 
     //1. embeddings model
-    const embeddings = new HuggingFaceInferenceEmbeddings({
-        apiKey: process.env.HF_TOKEN,
-        model: 'dunzhang/stella_en_1.5B_v5',
-    });
+    // const embeddings = new HuggingFaceInferenceEmbeddings({
+    //     apiKey: process.env.HF_TOKEN,
+    //     model: 'dunzhang/stella_en_1.5B_v5',
+    // });
 
     //2. vector store
-    const pinecone = await getPineconeClient()
-    const pineconeIndex = pinecone.Index('ideal-mate-v2')
-    const vectorStore = await PineconeStore.fromExistingIndex(
-        embeddings,
-        {
-            pineconeIndex,
-            namespace: fileId
-        }
-    )
+    // const pinecone = await getPineconeClient()
+    // const pineconeIndex = pinecone.Index('ideal-mate-v2')
+    // const vectorStore = await PineconeStore.fromExistingIndex(
+    //     embeddings,
+    //     {
+    //         pineconeIndex,
+    //         namespace: fileId
+    //     }
+    // )
 
     //3. similarity search
-    const similaritySearchResults = await vectorStore.similaritySearch(
-        message,
-        8
-    )
+    // const similaritySearchResults = await vectorStore.similaritySearch(
+    //     message,
+    //     8
+    // )
 
     //4. previous messages
     const prevMessages = await prisma.message.findMany({
@@ -82,7 +82,13 @@ export const POST = async (request: NextRequest) => {
     //5. query the llm model
     const hf = new HfInference(process.env.HF_TOKEN)
 
-    const response = hf.chatCompletionStream({
+    //todo give this in the prompt
+    /*
+            CONTEXT:
+        ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
+         */
+
+    const response = await hf.chatCompletion({
         model: "mistralai/Mistral-7B-Instruct-v0.2",
         messages: [{
             role: 'system',
@@ -94,8 +100,7 @@ export const POST = async (request: NextRequest) => {
 
         \n----------------\n
 
-        CONTEXT:
-        ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
+
 
         USER INPUT: ${message}`,
         },],
@@ -104,19 +109,35 @@ export const POST = async (request: NextRequest) => {
         seed: 0,
     })
 
-    //6. stream the response
-    const responseStream = HuggingFaceStream(response, {
-        async onCompletion(completion) {
-            await prisma.message.create({
-                data: {
-                    text: completion,
-                    isUserMessage: false,
-                    fileId,
-                    userId,
-                },
-            })
-        },
+    const answer = response.choices[0].message.content
+    console.log(answer);
+
+
+    //save the response later do it on stream completion
+    await prisma.message.create({
+        data: {
+            text: answer!,
+            isUserMessage: false,
+            userId,
+            fileId
+        }
     })
 
-    return new StreamingResponse(responseStream)
+    //6. stream the response
+    // const responseStream = HuggingFaceStream(response, {
+    //     async onCompletion(completion) {
+    //         await prisma.message.create({
+    //             data: {
+    //                 text: completion,
+    //                 isUserMessage: false,
+    //                 fileId,
+    //                 userId,
+    //             },
+    //         })
+    //     },
+    // })
+
+    return new Response(answer, {
+        status: 200
+    })
 }

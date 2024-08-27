@@ -22,6 +22,7 @@ const ChatPage = async ({ params }: PageProps) => {
     const session = await auth();
     const { fileid } = params;
     const file = await getFile(fileid, session?.user?.id!);
+    const currentUserName = session?.user?.name
 
     if (!file) notFound();
 
@@ -41,7 +42,7 @@ const ChatPage = async ({ params }: PageProps) => {
                 )
             )}
             <div className="flex-1 border-l h-full max-h-[calc(100vh-55px)]">
-                <ChatWrapper fileId={fileid} />
+                <ChatWrapper fileId={fileid} currentUserName={currentUserName} />
             </div>
         </div>
     )
