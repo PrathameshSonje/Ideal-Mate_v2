@@ -16,7 +16,7 @@ export const Navbar = async () => {
     const session = await auth();
 
     return (
-        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-700">
+        <div className="h-[55px] border-b w-full flex items-center px-4 justify-between text-[15px] font-medium text-zinc-600">
             <FileName session={session} />
             <div className="flex gap-6 items-center">
                 <Link href="/dashboard">

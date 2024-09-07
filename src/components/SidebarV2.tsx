@@ -1,10 +1,6 @@
 'use client'
 
-import { useState } from "react"
-import { ChevronsLeft, Menu, Plus, MessageSquare, ArrowUpRight } from "lucide-react"
-import { Button } from "./ui/button";
 import Link from "next/link";
-import { FaRegMessage } from "react-icons/fa6";
 import UploadButton from "./home/uploadButton";
 import SearchButton from "./ui/SearchButton";
 import { trpc } from "@/app/_trpc/client";

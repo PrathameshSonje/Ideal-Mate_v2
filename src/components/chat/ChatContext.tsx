@@ -5,9 +5,11 @@ import {
 } from 'react'
 import { useToast } from '../ui/use-toast'
 import { useMutation } from '@tanstack/react-query'
+import { trpc } from '@/app/_trpc/client'
+import prisma from '@/db/prismaClient'
 
 type StreamResponse = {
-    addMessage: () => void
+        addMessage: () => void
     message: string
     handleInputChange: (
         event: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,9 +34,10 @@ export const ChatContextProvider = ({
     children,
 }: Props) => {
     const [message, setMessage] = useState<string>('')
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { toast } = useToast()
+    const [isLoading, setIsLoading] = useState<boolean>(false) 
+    const utils = trpc.useUtils();
 
+    //TODO: Implement optimistic updates
     const { mutate: sendMessage } = useMutation({
         mutationFn: async ({
             message,
@@ -58,8 +61,12 @@ export const ChatContextProvider = ({
         onMutate: async () => {
             setIsLoading(true)
         },
-        onSuccess: (stream) => {
+        onSuccess: () => {
             setIsLoading(false)
+        },
+        onSettled: async () => {
+            setIsLoading(false)
+            await utils.getFileMessages.invalidate()
         }
     })
 

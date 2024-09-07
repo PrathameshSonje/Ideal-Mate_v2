@@ -26,14 +26,14 @@ export const ChatInput = ({ isDisabled }: ChatInputProps) => {
         textarea.style.height = `${textarea.scrollHeight}px`;
         setIsOverflow(textarea.scrollHeight > 120)
     };
-    
+
     return (
         <div className="border p-2.5 rounded-sm max-h-40 mr-3 w-full">
-            <form className="flex items-center gap-2 w-full">
+            <div className="flex items-center gap-2 w-full">
                 <textarea
                     ref={textareaRef}
                     className={clsx(
-                        "flex-1 outline-none resize-none text-zinc-700 text-[15px] font-medium", {
+                        "flex-1 outline-none resize-none text-zinc-700 text-[15px] font-medium bg-none bg-white", {
                         "overflow-y-auto max-h-[120px]": isOverflow
                     }
                     )}
@@ -57,7 +57,6 @@ export const ChatInput = ({ isDisabled }: ChatInputProps) => {
                     size="icon"
                     disabled={isDisabled || isLoading}
                     aria-label="send message"
-                    type="submit"
                     onClick={() => {
                         addMessage()
 
@@ -66,7 +65,7 @@ export const ChatInput = ({ isDisabled }: ChatInputProps) => {
                 >
                     <ArrowRight className="h-[16px] w-[16px]" strokeWidth={3} />
                 </Button>
-            </form>
+            </div>
         </div>
     )
 }

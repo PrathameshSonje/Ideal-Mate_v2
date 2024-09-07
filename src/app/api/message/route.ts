@@ -93,13 +93,21 @@ export const POST = async (request: NextRequest) => {
         messages: [{
             role: 'system',
             content:
-                'Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format.',
+                'Use the following pieces of context (or previous conversaton if needed) to answer the users question in proper markdown. The output should not include any ```markdown``` code block tags.',
         }, {
             role: 'user',
-            content: `Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.
+            content: `If you don't know the answer or if the user provides some random input, just say that you don't know, don't try to make up an answer. The answer should about what is asked and do not give irrelevent information
 
         \n----------------\n
 
+        PREVIOUS CONVERSATION:
+            ${formattedPrevMessages.map((message) => {
+                if (message.role === 'user')
+                    return `User: ${message.content}\n`
+                return `Assistant: ${message.content}\n`
+            })}
+
+        \n----------------\n
 
 
         USER INPUT: ${message}`,
@@ -122,6 +130,17 @@ export const POST = async (request: NextRequest) => {
             fileId
         }
     })
+
+    await prisma.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            generations: {
+                increment: 1,
+            }
+        },
+    });
 
     //6. stream the response
     // const responseStream = HuggingFaceStream(response, {

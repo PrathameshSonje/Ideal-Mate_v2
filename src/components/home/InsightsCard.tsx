@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export const InsightsCard = ({ User, isLoading }: { User: User, isLoading: boolean }) => {
 
-    const importLimit = 10;
+    const importLimit = 100;
     const generationsLimit = 500;
 
 

@@ -16,22 +16,15 @@ interface MessageProps {
 export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
-
     // const { } = useIntersection()
 
-    const { isLoading: isAiThinking } =
-        useContext(ChatContext)
+    const { isLoading: isAiThinking } = useContext(ChatContext)
 
-    const { data, isLoading, fetchNextPage } =
-        trpc.getFileMessages.useInfiniteQuery(
-            {
-                fileId,
-                limit: INFINITE_QUERY_LIMIT,
-            },
-            {
-                getNextPageParam: (lastPage) => lastPage?.nextCursor,
-            }
-        )
+    //TODO: Implement infinitQueries
+    const { data, isLoading } =
+        trpc.getFileMessages.useQuery({
+            fileId,
+        })
 
     const loadingMessage = {
         createdAt: new Date().toISOString(),
@@ -44,13 +37,15 @@ export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
         ),
     }
 
-    const messages = data?.pages.flatMap(
-        (page) => page.messages
-    )
+    // const messages = data?.pages.flatMap(
+    //     (page) => page.messages
+    // )
+
+    const messages = data?.messages
 
     const combinedMessages = [
-        ...(isAiThinking ? [loadingMessage] : []),
         ...(messages ?? []),
+        ...(isAiThinking ? [loadingMessage] : []),
     ]
 
     const { ref, entry } = useIntersection({
@@ -58,11 +53,11 @@ export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
         threshold: 1,
     })
 
-    useEffect(() => {
-        if (entry?.isIntersecting) {
-            fetchNextPage()
-        }
-    }, [entry, fetchNextPage])
+    // useEffect(() => {
+    //     if (entry?.isIntersecting) {
+    //         fetchNextPage()
+    //     }
+    // }, [entry, fetchNextPage])
 
     return (
         <div className="h-full flex flex-col gap-8">
