@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from "@/lib/helpers/utils"
 import { ArrowRight, Loader2 } from "lucide-react"
 import { Button } from "./button"
@@ -19,7 +21,7 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
     const { toast } = useToast();
     const { startUpload } = useUploadThing("pdfUploader");
     const inputSchema = z.object({
-        url: z.string().url("Invalid URL"), // Example schema
+        url: z.string().url("Invalid URL"),
     });
 
     const { mutate: startPolling } = trpc.getFile.useMutation(

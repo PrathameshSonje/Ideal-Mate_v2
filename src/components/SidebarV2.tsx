@@ -4,6 +4,7 @@ import Link from "next/link";
 import UploadButton from "./home/uploadButton";
 import SearchButton from "./ui/SearchButton";
 import { trpc } from "@/app/_trpc/client";
+import { ImLogo } from "./IMLogo";
 
 export const SidebarV2 = () => {
 
@@ -12,9 +13,10 @@ export const SidebarV2 = () => {
     return (
         <div className="w-[60px] items-center flex flex-col pb-4 px-2 border-r h-screen">
             <div className="flex-1">
-                <div className="flex items-center justify-center h-[55px]">
-                    <div className="cursor-pointer hover:bg-zinc-200 p-2 flex items-center justify-center rounded-md h-[36px] w-[36px]">
-                    </div>
+                <div className="flex items-center justify-center h-[55px] cursor-pointer">
+                    <Link href='/'>
+                        <ImLogo />
+                    </Link>
                 </div>
                 <div className="h-[44px] w-[44px] my-5">
                     <UploadButton className="h-full w-full" size="icon">

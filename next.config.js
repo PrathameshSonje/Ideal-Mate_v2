@@ -8,6 +8,9 @@ const nextConfig = {
         config.resolve.alias.encoding = false
         return config
     },
+    images: {
+        domains: ['avatars.githubusercontent.com'],
+    }
 }
 
 module.exports = nextConfig
