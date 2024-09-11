@@ -5,11 +5,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { ArrowUpRight, User } from "lucide-react"
-import Image from 'next/image'
+import { User } from "lucide-react"
 import Link from 'next/link'
-import { Avatar, AvatarFallback } from '../ui/avatar'
-import { Button } from '../ui/button'
 import { signOut } from '../../../auth'
 
 interface UserAccountNavProps {

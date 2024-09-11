@@ -9,13 +9,13 @@ import { auth } from "../../auth"
 interface feedbackMenuProps {
     userEmail: string,
     name: string,
-    token?: string
 }
 
-export const FeedBackMenu = ({ userEmail, name, token }: feedbackMenuProps) => {
+export const FeedBackMenu = ({ userEmail, name  }: feedbackMenuProps) => {
 
     const [feedback, setFeedback] = useState("")
     const [isOpen, setIsOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -23,16 +23,15 @@ export const FeedBackMenu = ({ userEmail, name, token }: feedbackMenuProps) => {
         const response = await fetch('/api/send-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userEmail, feedback, name, token }),
+            body: JSON.stringify({ userEmail, feedback, name }),
         })
 
-        const data = await response.json();
-        if (data.success) {
-            //TODO: add a toast
-            console.log("email send successfully");
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.message);
         } else {
-            //TODO: add a toast
-            console.log("some error occured");
+            const errorData = await response.json();
+            console.error('Error:', errorData.message);
         }
 
         setFeedback("")

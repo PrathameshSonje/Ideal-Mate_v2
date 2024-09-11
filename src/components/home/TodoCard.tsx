@@ -5,16 +5,16 @@ import { ListPlus } from "lucide-react"
 export const TodoCard = () => {
 
     const todos = [{
-        task: "I gotta do this by evening",
+        task: "study the history of Rome",
         isDone: false
     }, {
-        task: "I gotta do this by evening",
+        task: "Take notes from economics paper",
         isDone: false
     }, {
-        task: "I gotta do this by evening",
+        task: "get insights from the Physics research paper",
         isDone: false
     }, {
-        task: "I gotta do this by evening",
+        task: "summarize history notes",
         isDone: false
     }]
 

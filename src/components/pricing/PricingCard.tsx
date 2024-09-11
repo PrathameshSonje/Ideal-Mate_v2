@@ -5,12 +5,21 @@ import Link from "next/link"
 
 export const PricingCard = () => {
     return (
-        <div className="w-full h-full mx-auto  px-4 py-16">
-            <h1 className="text-4xl font-bold text-center mb-12 text-zinc-700">Choose Your Plan</h1>
+        <div className="w-full h-full mx-auto px-4 py-16">
+            <div id="tagline" className="flex flex-col items-center justify-center p-8">
+                <h1 className="text-5xl font-extrabold text-center text-zinc-800 w-4/5 mb-4">
+                    <span className="relative inline-block">
+                        <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">IdealMate.</span>
+                    </span>
+                    <span className="block mt-2 italic text-gray-700">is the ultimate study buddy for all your last-minute needs</span>
+                </h1>
+                <h3 className="text-xl font-medium text-gray-600 mb-12 tracking-wide">Unlimited access. Cancel anytime.</h3>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl">Free</CardTitle>
+                        <CardTitle className="text-2xl font-bold text-zinc-700">Free</CardTitle>
                         <CardDescription>Get started with basic features</CardDescription>
                     </CardHeader>
                     <CardContent className="text-center text-zinc-700">
@@ -31,7 +40,7 @@ export const PricingCard = () => {
                 </Card>
                 <Card className="border-primary">
                     <CardHeader>
-                        <CardTitle className="text-2xl">Premium</CardTitle>
+                        <CardTitle className="text-2xl font-bold text-zinc-700">Premium</CardTitle>
                         <CardDescription>Unlock advanced features</CardDescription>
                     </CardHeader>
                     <CardContent className="text-center text-zinc-700">
