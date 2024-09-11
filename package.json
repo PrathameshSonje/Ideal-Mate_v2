@@ -41,6 +41,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "framer-motion": "^11.5.4",
     "googleapis": "^144.0.0",
     "langchain": "^0.2.16",
     "lucide-react": "^0.411.0",
@@ -59,7 +60,7 @@
     "react-resize-detector": "^11.0.1",
     "remark-gfm": "^4.0.0",
     "resend": "^3.5.0",
-    "tailwind-merge": "^2.4.0",
+    "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.13.2",
     "zod": "^3.23.8"

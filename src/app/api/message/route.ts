@@ -88,59 +88,66 @@ export const POST = async (request: NextRequest) => {
         ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
          */
 
-    const response = await hf.chatCompletion({
-        model: "mistralai/Mistral-7B-Instruct-v0.2",
-        messages: [{
-            role: 'system',
-            content:
-                'Use the following pieces of context (or previous conversaton if needed) to answer the users question in proper markdown. The output should not include any ```markdown``` code block tags.',
-        }, {
-            role: 'user',
-            content: `If you don't know the answer or if the user provides some random input, just say that you don't know, don't try to make up an answer. The answer should about what is asked and do not give irrelevent information
+    let answer;
 
-        \n----------------\n
-
-        PREVIOUS CONVERSATION:
-            ${formattedPrevMessages.map((message) => {
-                if (message.role === 'user')
-                    return `User: ${message.content}\n`
-                return `Assistant: ${message.content}\n`
-            })}
-
-        \n----------------\n
-
-
-        USER INPUT: ${message}`,
-        },],
-        max_tokens: 500,
-        temperature: 0.1,
-        seed: 0,
-    })
-
-    const answer = response.choices[0].message.content
-    console.log(answer);
-
-
-    //save the response later do it on stream completion
-    await prisma.message.create({
-        data: {
-            text: answer!,
-            isUserMessage: false,
-            userId,
-            fileId
-        }
-    })
-
-    await prisma.user.update({
-        where: {
-            id: userId
-        },
-        data: {
-            generations: {
-                increment: 1,
+    try {
+        const response = await hf.chatCompletion({
+            model: "mistralai/Mistral-7B-Instruct-v0.2",
+            messages: [{
+                role: 'system',
+                content:
+                    'Use the following pieces of context (or previous conversaton if needed) to answer the users question in proper markdown. The output should not include any ```markdown``` code block tags.',
+            }, {
+                role: 'user',
+                content: `If you don't know the answer or if the user provides some random input, just say that you don't know, don't try to make up an answer. The answer should about what is asked and do not give irrelevent information
+    
+            \n----------------\n
+    
+            PREVIOUS CONVERSATION:
+                ${formattedPrevMessages.map((message) => {
+                    if (message.role === 'user')
+                        return `User: ${message.content}\n`
+                    return `Assistant: ${message.content}\n`
+                })}
+    
+            \n----------------\n
+    
+    
+            USER INPUT: ${message}`,
+            },],
+            max_tokens: 500,
+            temperature: 0.1,
+            seed: 0,
+        })
+    
+        answer = response.choices[0].message.content
+        console.log(answer);
+    
+    
+        //save the response later do it on stream completion
+        await prisma.message.create({
+            data: {
+                text: answer!,
+                isUserMessage: false,
+                userId,
+                fileId
             }
-        },
-    });
+        })
+    
+        await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                generations: {
+                    increment: 1,
+                }
+            },
+        });
+    
+    } catch (error) {
+        console.log(error);
+    }
 
     //6. stream the response
     // const responseStream = HuggingFaceStream(response, {

@@ -3,7 +3,7 @@ import { PricingCard } from "@/components/pricing/PricingCard"
 
 const Page = () => {
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full mt-10">
             <PricingCard />
             {/* <FeatureComparison /> */}
         </div>

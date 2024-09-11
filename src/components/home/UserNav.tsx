@@ -30,15 +30,15 @@ const UserAccountNav = async ({
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className='bg-white' align='end'>
-                <div className='flex items-center justify-start gap-2 p-4'>
-                    <div className='flex flex-col space-y-0.5 leading-none'>
+                <div className='flex items-center justify-start gap-2 px-5 py-4'>
+                    <div className='flex flex-col'>
                         {name && (
-                            <p className='font-medium text-[16px] text-zinc-700'>
+                            <p className='font-medium text-[17px] text-zinc-900'>
                                 {name}
                             </p>
                         )}
                         {email && (
-                            <p className='w-[200px] truncate text-[13px] text-zinc-600'>
+                            <p className='w-[200px] truncate text-[14px] -mt-1 text-zinc-600'>
                                 {email}
                             </p>
                         )}
@@ -47,13 +47,13 @@ const UserAccountNav = async ({
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className='font-medium text-zinc-600 px-4 py-2'>
+                <DropdownMenuItem className='font-medium text-zinc-600 text-[16px] px-5 py-2'>
                     <Link href='/dashboard'>Dashboard</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className='cursor-pointer font-medium px-4 py-2'>
+                <DropdownMenuItem className='cursor-pointer font-medium text-[16px] px-5 py-2'>
                     <form action={async () => {
                         "use server"
 

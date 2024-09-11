@@ -28,16 +28,8 @@ export default function RootLayout({
         <link rel="icon" href="favicon.ico" type="image/x-icon" sizes="256x256"></link>
       </Head>
       <Providers>
-        <body className={`${inter.className} font-sans  antialiased h-screen`}>
-          <div className="flex">
-            <SidebarV2 />
-            <div className="w-full flex flex-col">
-              <Navbar />
-              <div className="flex-grow">
-                {children}
-              </div>
-            </div>
-          </div>
+        <body className={`${inter.className} font-sans antialiased h-screen`}>
+          {children}
         </body>
       </Providers>
     </html>

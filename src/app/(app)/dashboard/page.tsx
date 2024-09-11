@@ -4,8 +4,8 @@ import { FilesCard } from "@/components/home/FIlesCard";
 import { InsightsCard } from "@/components/home/InsightsCard";
 import { TodoCard } from "@/components/home/TodoCard";
 import { getUserbyEmail } from "@/lib/data/user";
-import { auth } from "../../../auth";
-import { trpc } from "../_trpc/client";
+import { auth } from "../../../../auth";
+import { trpc } from "../../_trpc/client";
 import { useState } from "react";
 import { User } from "@/lib/types/types";
 

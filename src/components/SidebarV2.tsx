@@ -32,7 +32,7 @@ export const SidebarV2 = () => {
                             files.map((file) => (
                                 <Link key={file.id} href={`/chat/${file.id}`}>
                                     <div
-                                        className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[15px] cursor-pointer hover:bg-zinc-200"
+                                        className="shrink-0 h-[44px] w-[44px] border-2 hover:text-zinc-900 rounded-sm flex items-center justify-center font-medium text-zinc-700 text-[16px] cursor-pointer hover:bg-zinc-200"
                                         title={file.name}>
                                         {file.name[0]}
                                     </div>

@@ -3,7 +3,7 @@ import ChatWrapper from "@/components/chat/chatWrapper";
 import { PdfView } from "@/components/Pdf/PdfView";
 import { notFound, usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { auth } from "../../../../auth";
+import { auth } from "../../../../../auth";
 import { Loader2 } from "lucide-react";
 import { getFile } from "@/lib/data/file";
 import { absoluteUrl } from "@/lib/helpers/utils";

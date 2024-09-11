@@ -2,25 +2,14 @@ import { absoluteUrl } from '@/lib/helpers/utils';
 import React, { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-async function App() {
-
-    const url = absoluteUrl("/api/download-pdf");
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: "https://en.wikipedia.org/wiki/India" }),
-    });
-
-    const htmlContent = await response.text();
+async function TestingPage() {
 
     return (
         <div>
-            <Skeleton />
+            Hi from testing
         </div>
     );
 }
 
-export default App;
+
+export default TestingPage;
