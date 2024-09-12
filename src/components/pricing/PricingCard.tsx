@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { CheckIcon, XIcon } from "lucide-react"
 import Link from "next/link"
 import { Cloud } from "../landing/Cloud"
+import { BorderBeam } from "../magicui/border-beam"
 
 export const PricingCard = () => {
     return (
@@ -53,7 +54,8 @@ export const PricingCard = () => {
                     </CardFooter>
                 </Card>
 
-                <Card className="border-primary relative z-10 ">
+                <Card className="relative z-10 ">
+                    <BorderBeam colorFrom='#FFA500' colorTo='#FFFF00' size={250} duration={12} delay={9} />
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold text-zinc-700">Premium</CardTitle>
                         <CardDescription>Unlock advanced features</CardDescription>

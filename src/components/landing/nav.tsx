@@ -6,14 +6,14 @@ import { BorderBeam } from '../magicui/border-beam'
 export default function Navbar() {
 
     return (
-        <div className="fixed top-0 left-0 right-0 p-4 z-50">
-            <nav className="w-full mx-auto bg-white bg-opacity-70 backdrop-blur-md shadow-sm rounded-full">
+        <div className="fixed top-0 left-0 right-0 p-4 z-50 ">
+            <nav className="w-full mx-auto bg-white bg-opacity-70 backdrop-blur-md shadow-sm rounded-full border">
                 <BorderBeam colorFrom='#FFA500' colorTo='#FFFF00' size={250} duration={12} delay={9} />
                 <div className="px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex justify-center items-center gap-2 flex-shrink-0">
                             <ImLogo />
-                            <span className="text-2xl font-bold text-zinc-800">
+                            <span className="text-xl font-bold text-zinc-800">
                                 IdealMate.
                             </span>
                         </div>

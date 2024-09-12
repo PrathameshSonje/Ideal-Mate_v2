@@ -41,7 +41,7 @@ const ChatPage = async ({ params }: PageProps) => {
                     <PdfView fileUrl={file.url} />
                 )
             )}
-            <div className="flex-1 border-l h-full max-h-[calc(100vh-55px)]">
+            <div className="flex-1 border-l h-full max-h-[calc(100vh-60px)]">
                 <ChatWrapper fileId={fileid} currentUserName={currentUserName!} />
             </div>
         </div>

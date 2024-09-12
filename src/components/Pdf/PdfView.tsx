@@ -60,7 +60,7 @@ export const PdfView = ({ fileUrl }: PdfViewProps) => {
                     }} />
             </div>
             {/* //change here if the navbar size is changed */}
-            <div className='flex-1 max-h-[calc(100vh-95px)] overflow-y-auto bg-zinc-200 h-full'>
+            <div className='flex-1 max-h-[calc(100vh-100px)] overflow-y-auto bg-zinc-200 h-full'>
                 <div className={clsx('py-2 pl-2', {
                     'h-full flex items-center justify-center': isloading
                 })}>
