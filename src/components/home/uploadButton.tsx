@@ -1,28 +1,28 @@
-import React, { useState } from "react"
+import React, { SetStateAction, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Button } from "../ui/button"
 import Dropzone from "react-dropzone"
 import { Cloud, File, Loader2, Plus } from "lucide-react"
 import { Progress } from "../ui/progress"
 import { useUploadThing } from "@/lib/others/uploadthing"
-import { useToast } from "../ui/use-toast"
 import { useRouter } from "next/navigation"
 import { CustomInput } from "../ui/customInput"
-import clsx from "clsx"
 import { trpc } from "@/app/_trpc/client"
+import toast from "react-hot-toast"
 
-const UploadDropzone = () => {
+const UploadDropzone = ({ setOpen: setIsOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }) => {
     const router = useRouter();
-
+    const utils = trpc.useUtils()
     const [isUploading, setIsUploading] = useState<boolean | null>(null)
     const [uploadProgress, setuploadProgress] = useState<number>(0)
 
     const { startUpload } = useUploadThing("pdfUploader")
-    const { toast } = useToast()
 
     const { mutate: startPolling } = trpc.getFile.useMutation(
         {
             onSuccess: (file) => {
+                setIsOpen(false)
+                utils.getUserFiles.invalidate();
                 router.push(`/chat/${file.id}`)
             },
             retry: true,
@@ -54,11 +54,8 @@ const UploadDropzone = () => {
             const res = await startUpload(acceptedFiles)
 
             if (!res) {
-                return toast({
-                    title: 'someting went wrong',
-                    description: 'Please try again later',
-                    variant: 'destructive',
-                })
+                setIsOpen(false)
+                return toast.error("someting went wrong")
             }
 
             const [fileResponse] = res
@@ -66,11 +63,8 @@ const UploadDropzone = () => {
             const key = fileResponse?.key
 
             if (!key) {
-                return toast({
-                    title: 'someting went wrong',
-                    description: 'Please try again later',
-                    variant: 'destructive',
-                })
+                setIsOpen(false)
+                return toast.error("someting went wrong")
             }
 
             clearInterval(progressInterval)
@@ -130,11 +124,23 @@ const UploadDropzone = () => {
     )
 }
 
-const UploadButton = ({ className, children, size }: { className: string, children?: any, size?: "icon" | null | undefined }) => {
+const UploadButton = (
+    {
+        className,
+        children,
+        size
+    }:
+        {
+            className: string,
+            children?: any,
+            size?: "icon" | null | undefined
+        }
+) => {
+
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button className={className} size={size} title="Import Documents">
                     <Plus className="h-[16px] w-[16xpx]" strokeWidth={2.5} />
@@ -146,10 +152,10 @@ const UploadButton = ({ className, children, size }: { className: string, childr
                 <DialogHeader>
                     <DialogTitle className="text-zinc-700 text-xl">Import a Document</DialogTitle>
                     <DialogDescription>
-
+                        currently supports PDFs and websites
                     </DialogDescription>
                 </DialogHeader>
-                <UploadDropzone />
+                <UploadDropzone setOpen={setIsOpen} />
             </DialogContent>
         </Dialog>
     )

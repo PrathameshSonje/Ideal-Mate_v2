@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar"
+import { Sidebar } from "@/components/Sidebar"
 import { SidebarV2 } from "@/components/SidebarV2"
 
 export default function DashboardLayout({
@@ -8,7 +9,7 @@ export default function DashboardLayout({
 }) {
     return <div>
         <div className="flex">
-            <SidebarV2 />
+            <Sidebar />
             <div className="w-full flex flex-col">
                 <Navbar />
                 <div className="flex-grow">

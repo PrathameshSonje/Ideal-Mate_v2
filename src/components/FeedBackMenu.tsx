@@ -5,21 +5,23 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dro
 import { Button } from "./ui/button"
 import { Textarea } from "./ui/textarea"
 import { auth } from "../../auth"
+import toast from "react-hot-toast"
+
 
 interface feedbackMenuProps {
-    userEmail: string,
+    userEmail: string | undefined | null,
     name: string,
 }
 
-export const FeedBackMenu = ({ userEmail, name  }: feedbackMenuProps) => {
+export const FeedBackMenu = ({ userEmail, name }: feedbackMenuProps) => {
 
     const [feedback, setFeedback] = useState("")
     const [isOpen, setIsOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-
+        setIsLoading(true)
         const response = await fetch('/api/send-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,12 +30,20 @@ export const FeedBackMenu = ({ userEmail, name  }: feedbackMenuProps) => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            toast('Thankyou for your Feedback', {
+                duration: 4000,
+                position: 'bottom-right',
+                icon: '🙏',
+            });
         } else {
             const errorData = await response.json();
-            console.error('Error:', errorData.message);
+            toast.error('Something went wrong', {
+                duration: 4000,
+                position: 'bottom-right',
+            });
         }
 
+        setIsLoading(false)
         setFeedback("")
         setIsOpen(false)
     }
@@ -54,8 +64,18 @@ export const FeedBackMenu = ({ userEmail, name  }: feedbackMenuProps) => {
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
                         className="min-h-[100px] mb-4"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit(e);
+                            }
+                        }}
                     />
-                    <Button type="submit" className="w-full">
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading}
+                        >
                         Submit Feedback
                     </Button>
                 </form>

@@ -16,6 +16,12 @@ export const TodoCard = () => {
     }, {
         task: "summarize history notes",
         isDone: false
+    }, {
+        task: "edit file name option in the navbar",
+        isDone: false
+    }, {
+        task: "Pulsate the green dot",
+        isDone: false
     }]
 
     return (

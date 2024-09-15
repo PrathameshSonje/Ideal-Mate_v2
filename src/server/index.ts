@@ -31,6 +31,9 @@ export const appRouter = router({
                 const files = await prisma.file.findMany({
                     where: {
                         userId: userId
+                    },
+                    orderBy: {
+                        createAt: "desc"
                     }
                 })
 
@@ -74,6 +77,12 @@ export const appRouter = router({
             })
 
             if (!file) throw new TRPCError({ code: 'NOT_FOUND' })
+
+            await prisma.message.deleteMany({
+                where: {
+                    fileId: input.id,
+                },
+            })
 
             await prisma.file.delete({
                 where: {

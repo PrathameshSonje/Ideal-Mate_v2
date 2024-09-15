@@ -60,13 +60,7 @@ const onUploadComplete = async ({ metadata, file }: {
 
     try {
         //get the document
-        const response = await fetch('/api/download-pdf', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ url: "https://utfs.io/f/be36bd9c-21a4-467a-b927-af7051726dd9-e91o2j.pdf" }),
-        });
+        const response = await fetch(file.url)
 
         const blob = await response.blob();
         const loader = new WebPDFLoader(blob)

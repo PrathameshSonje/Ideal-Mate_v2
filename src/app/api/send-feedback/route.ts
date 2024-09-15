@@ -3,7 +3,7 @@ import nodemailer from "nodemailer"
 
 export const POST = async (request: NextRequest) => {
     const body = await request.json()
-    const { email, feedback, name} = body;
+    const { userEmail, feedback, name} = body;
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -19,7 +19,7 @@ export const POST = async (request: NextRequest) => {
             to: process.env.MY_EMAIL,
             subject: `New Feedback from ${name}`,
             text: feedback,
-            html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${feedback}</p>`,
+            html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${userEmail}</p><p>${feedback}</p>`,
         });
 
         return new Response(JSON.stringify({ message: 'Message sent successfully' }), {

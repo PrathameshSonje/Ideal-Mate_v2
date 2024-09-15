@@ -48,13 +48,25 @@ const SearchFileCard = () => {
     )
 }
 
-const SearchButton = ({ className, children, size }: { className: string, children?: any, size?: "icon" | null | undefined }) => {
+const SearchButton = (
+    {
+        className,
+        children,
+        size
+    }:
+        {
+            className: string,
+            children?: any,
+            size?: "icon" | null | undefined
+        }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button className={className} size={size} variant="outline" title="Search Documents">
-                    <FolderSearch className="h-[20px] w-[20xpx] text-zinc-700" strokeWidth={2} />
-                    {children}
+                    <div className="flex gap-2 transition-all duration-300 ease-in-out text-ellipsis whitespace-nowrap">
+                        <FolderSearch className="h-[20px] w-[20xpx] text-zinc-700" strokeWidth={2} />
+                        {children}
+                    </div>
                 </Button>
             </DialogTrigger>
 

@@ -39,27 +39,27 @@ export const POST = async (request: NextRequest) => {
     })
 
     //1. embeddings model
-    // const embeddings = new HuggingFaceInferenceEmbeddings({
-    //     apiKey: process.env.HF_TOKEN,
-    //     model: 'dunzhang/stella_en_1.5B_v5',
-    // });
+    const embeddings = new HuggingFaceInferenceEmbeddings({
+        apiKey: process.env.HF_TOKEN,
+        model: 'dunzhang/stella_en_1.5B_v5',
+    });
 
     //2. vector store
-    // const pinecone = await getPineconeClient()
-    // const pineconeIndex = pinecone.Index('ideal-mate-v2')
-    // const vectorStore = await PineconeStore.fromExistingIndex(
-    //     embeddings,
-    //     {
-    //         pineconeIndex,
-    //         namespace: fileId
-    //     }
-    // )
+    const pinecone = await getPineconeClient()
+    const pineconeIndex = pinecone.Index('ideal-mate-v2')
+    const vectorStore = await PineconeStore.fromExistingIndex(
+        embeddings,
+        {
+            pineconeIndex,
+            namespace: fileId
+        }
+    )
 
     //3. similarity search
-    // const similaritySearchResults = await vectorStore.similaritySearch(
-    //     message,
-    //     8
-    // )
+    const similaritySearchResults = await vectorStore.similaritySearch(
+        message,
+        8
+    )
 
     //4. previous messages
     const prevMessages = await prisma.message.findMany({
@@ -92,7 +92,7 @@ export const POST = async (request: NextRequest) => {
 
     try {
         const response = await hf.chatCompletion({
-            model: "mistralai/Mistral-7B-Instruct-v0.2",
+            model: "mistralai/Mistral-Nemo-Instruct-2407",
             messages: [{
                 role: 'system',
                 content:
@@ -112,6 +112,8 @@ export const POST = async (request: NextRequest) => {
     
             \n----------------\n
     
+            CONTEXT:
+        ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
     
             USER INPUT: ${message}`,
             },],
@@ -119,11 +121,11 @@ export const POST = async (request: NextRequest) => {
             temperature: 0.1,
             seed: 0,
         })
-    
+
         answer = response.choices[0].message.content
         console.log(answer);
-    
-    
+
+
         //save the response later do it on stream completion
         await prisma.message.create({
             data: {
@@ -133,7 +135,7 @@ export const POST = async (request: NextRequest) => {
                 fileId
             }
         })
-    
+
         await prisma.user.update({
             where: {
                 id: userId
@@ -144,7 +146,7 @@ export const POST = async (request: NextRequest) => {
                 }
             },
         });
-    
+
     } catch (error) {
         console.log(error);
     }

@@ -14,7 +14,7 @@ export const InsightsCard = ({ User, isLoading }: { User: User, isLoading: boole
         <CardWrapper>
             <div id="insights" className="flex flex-col gap-3 h-[96px] w-[740px] max-w-full">
                 <p className="font-semibold text-[28px] text-zinc-800">
-                    Welcome back,
+                    Welcome back,{" "}
                     <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent font-bold">
                         {isLoading ? (
                             <span><Skeleton /></span>

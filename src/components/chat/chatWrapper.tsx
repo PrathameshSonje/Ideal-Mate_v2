@@ -48,22 +48,22 @@ const ChatWrapper = (
             </div>
         )
 
-    // if (data?.status === 'PROCESSING')
-    //     return (
-    //         <div className='pl-4 py-4 pr-[2px] flex flex-col h-full'>
-    //             <div className='flex-1 flex justify-center items-center flex-col mb-28'>
-    //                 <div className='flex flex-col items-center gap-2'>
-    //                     <Loader2 className='h-7 w-7 text-orange-500 animate-spin' />
-    //                     <p className='text-zinc-500 text-sm font-medium'>
-    //                         This Won&apos;t take long.
-    //                     </p>
-    //                 </div>
-    //             </div>
-    //             <div className="w-full mt-4 flex items-end">
-    //                 <ChatInput isDisabled />
-    //             </div>
-    //         </div>
-    //     )
+    if (data?.status === 'PROCESSING')
+        return (
+            <div className='pl-4 py-4 pr-[2px] flex flex-col h-full'>
+                <div className='flex-1 flex justify-center items-center flex-col mb-28'>
+                    <div className='flex flex-col items-center gap-2'>
+                        <Loader2 className='h-7 w-7 text-orange-500 animate-spin' />
+                        <p className='text-zinc-500 text-sm font-medium'>
+                            This Won&apos;t take long.
+                        </p>
+                    </div>
+                </div>
+                <div className="w-full mt-4 flex items-end">
+                    <ChatInput isDisabled />
+                </div>
+            </div>
+        )
 
     if (data?.status === 'FAILED')
         return (

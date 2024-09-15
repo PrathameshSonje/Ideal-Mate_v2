@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { SidebarV2 } from "@/components/SidebarV2";
+import { Toaster } from 'react-hot-toast';
 import Providers from "@/components/providers";
 import Head from "next/head";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <Providers>
         <body className={`${inter.className} font-sans antialiased h-screen`}>
           {children}
+          <Toaster />
         </body>
       </Providers>
     </html>

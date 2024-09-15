@@ -47,9 +47,11 @@ const UserAccountNav = async ({
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className='font-medium text-zinc-600 text-[16px] px-5 py-2'>
-                    <Link href='/dashboard'>Dashboard</Link>
-                </DropdownMenuItem>
+                <Link href='/dashboard'>
+                    <DropdownMenuItem className='font-medium text-zinc-600 text-[16px] px-5 py-2'>
+                        Dashboard
+                    </DropdownMenuItem>
+                </Link>
 
                 <DropdownMenuSeparator />
 

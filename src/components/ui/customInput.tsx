@@ -17,6 +17,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const { toast } = useToast();
     const { startUpload } = useUploadThing("pdfUploader");
@@ -50,6 +51,7 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
 
     const onSubmit: SubmitHandler<z.infer<typeof inputSchema>> = async ({ url }) => {
         setError(null);
+        setIsLoading(true);
 
         const response = await fetch('/api/download-pdf', {
             method: 'POST',
@@ -106,11 +108,11 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
                     <div className="text-red-500 text-xs">{errors.url.message}</div>
                 )}
                 <Button
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                     className="rounded-full h-[30px] w-[30px]"
                     size="icon"
                     type="submit">
-                    {isSubmitting ? (
+                    {isSubmitting || isLoading ? (
                         <Loader2 className="h-[16px] w-[16px] animate-spin" strokeWidth={2} />
                     ) : (
                         <ArrowRight className="h-[16px] w-[16px]" strokeWidth={3} />

@@ -10,6 +10,7 @@ import { FaRegMessage } from "react-icons/fa6"
 import { formatFileSize, sortFilesByDate, sortFilesByName } from "@/lib/helpers/utils"
 import { File as FileType } from "@/lib/types/types"
 import Skeleton from "react-loading-skeleton"
+import toast from "react-hot-toast"
 
 export const FilesCard = (
     {

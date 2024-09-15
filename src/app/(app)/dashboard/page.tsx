@@ -8,6 +8,7 @@ import { auth } from "../../../../auth";
 import { trpc } from "../../_trpc/client";
 import { useState } from "react";
 import { User } from "@/lib/types/types";
+import toast from "react-hot-toast";
 
 const Page = () => {
 
@@ -20,6 +21,10 @@ const Page = () => {
         onSuccess: () => {
             utils.getUserFiles.invalidate();
             utils.getUser.invalidate();
+            toast.success('Successfully deleted file', {
+                duration: 4000,
+                position: 'bottom-right',
+            });
         },
         onMutate({ id }) {
             setCurrentlyDeletingFile(id)

@@ -27,7 +27,9 @@ export const Navbar = async () => {
                         <ArrowUpRight className="h-[18px] w-[18px]" />
                     </div>
                 </Link> */}
-                <FeedBackMenu userEmail={session?.user?.email!} name={session?.user?.name!} />
+                <FeedBackMenu
+                    userEmail={session?.user?.email}
+                    name={session?.user?.name!} />
                 <Link href="/pricing">
                     <div className="flex gap-1 items-center hover:text-orange-500">
                         <span>Premium</span>

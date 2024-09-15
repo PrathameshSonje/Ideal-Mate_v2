@@ -6,29 +6,29 @@ import { ChevronDown } from 'lucide-react'
 
 const faqData = [
     {
-        question: "What is acme.ai?",
-        answer: "acme.ai is a cutting-edge AI platform that empowers businesses to harness the power of artificial intelligence. Our suite of tools and services makes it easy to develop, deploy, and manage AI-powered applications, even without extensive technical expertise."
+        question: "What is IdealMate AI",
+        answer: "IdealMate AI is an innovative tool that allows you to chat with your documents. Whether it's a PDF or a website, you can upload the document and ask questions to get concise, AI-generated answers based on the content. It’s a powerful way to quickly understand and extract insights from your documents."
     },
     {
-        question: "How can I get started with acme.ai?",
-        answer: "Getting started with acme.ai is simple! Sign up for a free account on our website, explore our comprehensive documentation, and try out our interactive tutorials. You'll be building AI-powered applications in no time."
+        question: "How can I get started with IdealMate.ai?",
+        answer: "Getting started is simple: sign up for a free IdealMate account, upload your PDFs or websites, and start asking questions to get AI-generated answers based on your document's content."
     },
     {
-        question: "What types of AI models does acme.ai support?",
-        answer: "acme.ai supports a wide range of AI models, including but not limited to natural language processing, computer vision, predictive analytics, and reinforcement learning. Our platform is designed to be flexible, allowing you to use pre-trained models or create custom ones tailored to your specific needs."
+        question: "What types of documents can I upload to IdealMate?",
+        answer: "Currently, IdealMate supports PDF files and websites. You can import these documents to chat with them and ask questions. In the future, we plan to support additional formats like PPTX and more."
     },
     {
-        question: "Is acme.ai suitable for beginners in AI development?",
-        answer: "acme.ai is designed with both beginners and experts in mind. Our user-friendly interface, step-by-step guides, and extensive learning resources make it easy for newcomers to dive into AI development. At the same time, our advanced features cater to the needs of experienced data scientists and AI engineers."
+        question: "Will I be able to access documents after hitting the upload or question limit?",
+        answer: "Yes, even after reaching the document or question limit on the free plan, you will still have access to the previously uploaded documents and the questions you’ve already generated. However, you won’t be able to upload new documents or generate more questions unless you upgrade your plan."
     },
     {
-        question: "What kind of support does acme.ai provide?",
-        answer: "At acme.ai, we're committed to your success. We offer 24/7 technical support, regular webinars and workshops, a vibrant community forum, and detailed documentation. For enterprise clients, we also provide dedicated account managers and custom onboarding programs to ensure smooth integration and maximum value from our platform."
+        question: "What kind of support does IdealMate.ai provide?",
+        answer: "IdealMate.ai provides support for importing PDFs and websites, with plans to add more formats like PPT in the future. If you encounter any bugs or want to request features, please fill out our feedback form, and I’ll get back to you within a few days."
     }
 ]
 
 export const FaqSection = () => {
-        const [activeIndex, setActiveIndex] = useState<number | null>(null)
+    const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
     const toggleQuestion = (index: number) => {
         setActiveIndex(activeIndex === index ? null : index)
