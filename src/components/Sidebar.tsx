@@ -22,7 +22,7 @@ export const Sidebar = () => {
     }
 
     return (
-        <div className={`h-screen transition-all duration-300 ease-in-out border-r`}>
+        <div className={`h-screen transition-all duration-300 ease-in-out border-r-2`}>
             {collapsed ? (
                 <div className="w-[60px] px-2 flex flex-col h-full pb-4">
                     <div className="flex-1">

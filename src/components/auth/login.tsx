@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { CardWrapper } from "./auth-wrapper";
 import { SubmitHandler, useForm } from 'react-hook-form';

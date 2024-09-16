@@ -1,9 +1,12 @@
 import { LoginForm } from "@/components/auth/login"
+import { Suspense } from "react"
 
 const Login = () => {
-    return(
+    return (
         <div className="flex items-center justify-center w-full h-full">
-            <LoginForm />
+            <Suspense fallback={<div></div>}>
+                <LoginForm />
+            </Suspense>
         </div>
     )
 }

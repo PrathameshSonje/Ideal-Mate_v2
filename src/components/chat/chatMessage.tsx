@@ -83,7 +83,7 @@ export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
                                 isNextMessageSamePerson={
                                     isNextMessageSamePerson
                                 }
-                                currentUserName={"msgwithRef"}
+                                currentUserName={currentUserName}
                                 key={message.id}
                             />
                         )
