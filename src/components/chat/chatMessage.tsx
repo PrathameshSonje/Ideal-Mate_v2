@@ -15,16 +15,28 @@ interface MessageProps {
 
 export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
 
-    const lastMessageRef = useRef<HTMLDivElement>(null);
-    // const { } = useIntersection()
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { ref, entry } = useIntersection({
+        root: containerRef.current,
+        threshold: 1,
+    });
 
     const { isLoading: isAiThinking } = useContext(ChatContext)
 
     //TODO: Implement infinitQueries
-    const { data, isLoading } =
-        trpc.getFileMessages.useQuery({
-            fileId,
-        })
+    const { data, isLoading, fetchNextPage } = trpc.getFileMessages.useInfiniteQuery({
+        fileId,
+        limit: INFINITE_QUERY_LIMIT,
+    }, {
+        getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    })
+
+
+
+    // const { data, isLoading } =
+    //     trpc.getFileMessages.useQuery({
+    //         fileId,
+    //     })
 
     const loadingMessage = {
         createdAt: new Date().toISOString(),
@@ -41,26 +53,22 @@ export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
     //     (page) => page.messages
     // )
 
-    const messages = data?.messages
+    const messages = data?.pages.flatMap((page) => page.messages)
 
     const combinedMessages = [
-        ...(messages ?? []),
         ...(isAiThinking ? [loadingMessage] : []),
+        ...(messages ?? []),
     ]
 
-    const { ref, entry } = useIntersection({
-        root: lastMessageRef.current,
-        threshold: 1,
-    })
-
-    // useEffect(() => {
-    //     if (entry?.isIntersecting) {
-    //         fetchNextPage()
-    //     }
-    // }, [entry, fetchNextPage])
+    useEffect(() => {
+        if (entry?.isIntersecting) {
+            console.log("next page fetched");
+            fetchNextPage()
+        }
+    }, [entry?.isIntersecting, fetchNextPage])
 
     return (
-        <div className="h-full flex flex-col gap-8">
+        <div className="h-full flex flex-col-reverse gap-8 max-h-[calc(100vh-3.5rem-6rem)] overflow-y-auto scrollbar-thumb-red scrollbar-thumb-rounded scrollbar-track-red-lighter scrollbar-w-2  pr-3" ref={containerRef}>
             {combinedMessages && combinedMessages.length > 0 ? (
                 combinedMessages.map((message, i) => {
                     const isNextMessageSamePerson =
@@ -75,7 +83,7 @@ export const ChatMessage = ({ fileId, currentUserName }: MessageProps) => {
                                 isNextMessageSamePerson={
                                     isNextMessageSamePerson
                                 }
-                                currentUserName={currentUserName}
+                                currentUserName={"msgwithRef"}
                                 key={message.id}
                             />
                         )

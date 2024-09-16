@@ -39,15 +39,39 @@ export function formatFileSize(bytes: number) {
   return `${formattedSize} ${sizes[i]}`;
 }
 
-export class StreamingResponse extends Response {
+export const makeStream = <T extends Record<string, unknown>>(generator: AsyncGenerator<T, void, unknown>) => {
 
-  constructor( res: ReadableStream<any>, init?: ResponseInit ) {
-    super(res as any, {
-      ...init,
-      status: 200,
-      headers: {
-        ...init?.headers,
-      },
-    });
+  const encoder = new TextEncoder();
+  return new ReadableStream<any>({
+    async start(controller) {
+      for await (let chunk of generator) {
+        const chunkData = encoder.encode(JSON.stringify(chunk.choices[0]?.delta?.content));
+        controller.enqueue(chunkData);
+      }
+      controller.close();
+    }
+  });
+}
+
+/**
+ * Generator function that streams the response body from a fetch request.
+ */
+export async function* streamingFetch(input: RequestInfo | URL, init?: RequestInit) {
+
+  const response = await fetch(input, init)
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder('utf-8');
+
+  for (; ;) {
+    const { done, value } = await reader.read()
+    if (done) break;
+
+    try {
+      yield decoder.decode(value)
+    }
+    catch (e: any) {
+      console.warn(e.message)
+    }
+
   }
 }

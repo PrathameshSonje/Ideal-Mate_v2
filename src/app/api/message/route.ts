@@ -7,7 +7,24 @@ import { getPineconeClient } from "@/lib/others/pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 import { HfInference } from "@huggingface/inference";
 import { HuggingFaceStream, streamToResponse } from 'ai'
-import { StreamingResponse } from "@/lib/helpers/utils";
+import { makeStream } from "@/lib/helpers/utils";
+
+/**
+        * A custom Response subclass that accepts a ReadableStream.
+        * This allows creating a streaming Response for async generators.
+*/
+class StreamingResponse extends Response {
+
+    constructor(res: ReadableStream<any>, init?: ResponseInit) {
+        super(res as any, {
+            ...init,
+            status: 200,
+            headers: {
+                ...init?.headers,
+            },
+        });
+    }
+}
 
 export const POST = async (request: NextRequest) => {
     //endpoint for asking a question to a PDF
@@ -88,27 +105,25 @@ export const POST = async (request: NextRequest) => {
         ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
          */
 
-    let answer;
 
-    try {
-        const response = await hf.chatCompletion({
-            model: "mistralai/Mistral-Nemo-Instruct-2407",
-            messages: [{
-                role: 'system',
-                content:
-                    'Use the following pieces of context (or previous conversaton if needed) to answer the users question in proper markdown. The output should not include any ```markdown``` code block tags.',
-            }, {
-                role: 'user',
-                content: `If you don't know the answer or if the user provides some random input, just say that you don't know, don't try to make up an answer. The answer should about what is asked and do not give irrelevent information
+    let ai_response = await hf.chatCompletion({
+        model: "mistralai/Mistral-Nemo-Instruct-2407",
+        messages: [{
+            role: 'system',
+            content:
+                'Use the following pieces of context (or previous conversaton if needed) to answer the users question in proper markdown. The output should not include any ```markdown``` code block tags.',
+        }, {
+            role: 'user',
+            content: `If you don't know the answer or if the user provides some random input, just say that you don't know, don't try to make up an answer. The answer should about what is asked and do not give irrelevent information
     
             \n----------------\n
     
             PREVIOUS CONVERSATION:
                 ${formattedPrevMessages.map((message) => {
-                    if (message.role === 'user')
-                        return `User: ${message.content}\n`
-                    return `Assistant: ${message.content}\n`
-                })}
+                if (message.role === 'user')
+                    return `User: ${message.content}\n`
+                return `Assistant: ${message.content}\n`
+            })}
     
             \n----------------\n
     
@@ -116,42 +131,38 @@ export const POST = async (request: NextRequest) => {
         ${similaritySearchResults.map((r) => r.pageContent).join('\n\n')}
     
             USER INPUT: ${message}`,
-            },],
-            max_tokens: 500,
-            temperature: 0.1,
-            seed: 0,
-        })
+        },],
+        max_tokens: 500,
+        temperature: 0.1,
+        seed: 0,
+    })
 
-        answer = response.choices[0].message.content
-        console.log(answer);
+    const answer = ai_response.choices[0].message.content
+    console.log(answer);
 
 
-        //save the response later do it on stream completion
-        await prisma.message.create({
-            data: {
-                text: answer!,
-                isUserMessage: false,
-                userId,
-                fileId
+    // save the response later do it on stream completion
+    await prisma.message.create({
+        data: {
+            text: answer!,
+            isUserMessage: false,
+            userId,
+            fileId
+        }
+    })
+
+    await prisma.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            generations: {
+                increment: 1,
             }
-        })
+        },
+    });
 
-        await prisma.user.update({
-            where: {
-                id: userId
-            },
-            data: {
-                generations: {
-                    increment: 1,
-                }
-            },
-        });
-
-    } catch (error) {
-        console.log(error);
-    }
-
-    //6. stream the response
+    // 6. stream the response
     // const responseStream = HuggingFaceStream(response, {
     //     async onCompletion(completion) {
     //         await prisma.message.create({
@@ -164,6 +175,23 @@ export const POST = async (request: NextRequest) => {
     //         })
     //     },
     // })
+
+    // const stream = HuggingFaceStream(answer, {
+    //     async onCompletion(completion) {
+    //         await prisma.message.create({
+    //             data: {
+    //                 text: completion,
+    //                 isUserMessage: false,
+    //                 userId,
+    //                 fileId
+    //             }
+    //         })
+    //     },
+    // })
+
+    // const stream = makeStream(answer)
+    // const response = new StreamingResponse(stream)
+    // return response;
 
     return new Response(answer, {
         status: 200

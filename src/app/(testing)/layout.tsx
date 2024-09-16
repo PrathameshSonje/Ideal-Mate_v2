@@ -3,8 +3,7 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode
 }) {
-    return <div>
-        Hello there ninga
+    return <div className="w-full h-screen">
         {children}
     </div>
 }

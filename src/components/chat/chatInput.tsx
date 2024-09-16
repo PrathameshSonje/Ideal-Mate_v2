@@ -28,7 +28,7 @@ export const ChatInput = ({ isDisabled }: ChatInputProps) => {
     };
 
     return (
-        <div className="border p-2.5 rounded-sm max-h-40 mr-3 w-full">
+        <div className="border p-2.5 rounded-sm max-h-40 mr-4 w-full">
             <div className="flex items-center gap-2 w-full">
                 <textarea
                     ref={textareaRef}

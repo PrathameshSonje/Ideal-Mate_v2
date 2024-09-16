@@ -1,15 +1,18 @@
 import {
     ReactNode,
     createContext,
+    useRef,
     useState,
 } from 'react'
 import { useToast } from '../ui/use-toast'
 import { useMutation } from '@tanstack/react-query'
 import { trpc } from '@/app/_trpc/client'
 import prisma from '@/db/prismaClient'
+import toast from 'react-hot-toast'
+import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query'
 
 type StreamResponse = {
-        addMessage: () => void
+    addMessage: () => void
     message: string
     handleInputChange: (
         event: React.ChangeEvent<HTMLTextAreaElement>
@@ -34,8 +37,9 @@ export const ChatContextProvider = ({
     children,
 }: Props) => {
     const [message, setMessage] = useState<string>('')
-    const [isLoading, setIsLoading] = useState<boolean>(false) 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const utils = trpc.useUtils();
+    const backUpMessage = useRef('')
 
     //TODO: Implement optimistic updates
     const { mutate: sendMessage } = useMutation({
@@ -58,15 +62,73 @@ export const ChatContextProvider = ({
 
             return response.body
         },
-        onMutate: async () => {
+        onMutate: async ({ message }) => {
+            backUpMessage.current = message
+            setMessage('')
+
+            await utils.getFileMessages.cancel()
+            const previousMessages = utils.getFileMessages.getInfiniteData()
+
+            utils.getFileMessages.setInfiniteData(
+                { fileId, limit: INFINITE_QUERY_LIMIT },
+                (old) => {
+                    if (!old) {
+                        return {
+                            pages: [],
+                            pageParams: [],
+                        }
+                    }
+
+                    let newPages = [...old.pages]
+
+                    let latestPage = newPages[0]!
+
+                    latestPage.messages = [
+                        {
+                            createdAt: new Date().toISOString(),
+                            id: crypto.randomUUID(),
+                            text: message,
+                            isUserMessage: true,
+                        },
+                        ...latestPage.messages,
+                    ]
+
+                    newPages[0] = latestPage
+
+                    return {
+                        ...old,
+                        pages: newPages,
+                    }
+                }
+            )
+
             setIsLoading(true)
+
+            return {
+                previousMessages:
+                    previousMessages?.pages.flatMap(
+                        (page) => page.messages
+                    ) ?? [],
+            }
         },
-        onSuccess: () => {
+        onSuccess: async (stream) => {
             setIsLoading(false)
+
+            // if (!stream) {
+            //     return toast.error('There was a problem sending this message')
+            // }
+
+            // const reader = stream.getReader();
+            // const decoder = new TextDecoder('utf-8');
+            // let done = false
+
+            // let accResponse = ''
+
+
         },
         onSettled: async () => {
             setIsLoading(false)
-            await utils.getFileMessages.invalidate()
+            await utils.getFileMessages.invalidate({ fileId })
         }
     })
 
