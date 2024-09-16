@@ -7,7 +7,6 @@ import { getPineconeClient } from "@/lib/others/pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 import { HfInference } from "@huggingface/inference";
 import { HuggingFaceStream, streamToResponse } from 'ai'
-import { makeStream } from "@/lib/helpers/utils";
 
 /**
         * A custom Response subclass that accepts a ReadableStream.
