@@ -1,11 +1,8 @@
-import { useToast } from "@/components/ui/use-toast"
+import toast from "react-hot-toast";
 
 export function loginToast(email: string) {
-    const { toast } = useToast()
 
     return (
-        toast({
-            description: `SignedIn as ${email}`,
-        })
+        toast.success(`SignedIn as ${email}`)
     )
 }

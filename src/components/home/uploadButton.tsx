@@ -75,7 +75,7 @@ const UploadDropzone = ({ setOpen: setIsOpen }: { setOpen: React.Dispatch<SetSta
             {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <section>
                     <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-                        <CustomInput className="w-full" placeholder="Website or link to a PDF   " />
+                        <CustomInput className="w-full" placeholder="Website or link to a PDF" setDialogOpen={setIsOpen}/>
                         <div className="border h-64 w-full border-dashed border-gray-300 rounded-sm overflow-hidden">
                             <div {...getRootProps()} className="flex items-center justify-center h-full w-full">
                                 <input {...getInputProps()} />

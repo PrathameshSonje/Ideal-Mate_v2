@@ -6,20 +6,22 @@ import { Button } from "./button"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import { FormErrorBox } from "../auth/errorBox"
 import { useUploadThing } from "@/lib/others/uploadthing"
-import { useToast } from "./use-toast"
 import { trpc } from "@/app/_trpc/client"
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    setDialogOpen: React.Dispatch<SetStateAction<boolean>>
+}
 
-const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
+const CustomInput: React.FC<InputProps> = (({ setDialogOpen, className, type, ...props }) => {
     const router = useRouter()
+    const utils = trpc.useUtils()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const { toast } = useToast();
     const { startUpload } = useUploadThing("pdfUploader");
     const inputSchema = z.object({
         url: z.string().url("Invalid URL"),
@@ -28,6 +30,8 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
     const { mutate: startPolling } = trpc.getFile.useMutation(
         {
             onSuccess: (file) => {
+                setDialogOpen(false)
+                utils.getUserFiles.invalidate();
                 router.push(`/chat/${file.id}`)
             },
             retry: true,
@@ -38,10 +42,16 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
     const { mutate: handleHTML } = trpc.uploadWebsite.useMutation(
         {
             onSuccess: (file) => {
+                setDialogOpen(false)
+                utils.getUserFiles.invalidate();
                 router.push(`/chat/${file.id}`)
             },
-            retry: true,
-            retryDelay: 500,
+
+            onError(_, variables) {
+                console.log("hi from onError");
+                setDialogOpen(false)
+                toast.error(`failed to upload ${variables.url}`)
+            },
         }
     )
 
@@ -74,11 +84,7 @@ const CustomInput: React.FC<InputProps> = (({ className, type, ...props }) => {
             const res = await startUpload([pdfFile])
 
             if (!res) {
-                return toast({
-                    title: 'someting went wrong',
-                    description: 'Please try again later',
-                    variant: 'destructive',
-                })
+                return toast.error('someting went wrong')
             }
 
             const [fileResponse] = res

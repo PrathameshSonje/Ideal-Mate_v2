@@ -2,12 +2,11 @@ import { TypeOf, z } from 'zod';
 import { router, publicProcedure, privateProcedure } from './trpc';
 import prisma from '@/db/prismaClient';
 import { TRPCError } from '@trpc/server';
-import { auth } from '../../auth';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { CheerioWebBaseLoader } from "@langchain/community/document_loaders/web/cheerio";
 import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf';
-import { getPineconeClient } from '@/lib/others/pinecone';
-import { PineconeStore } from '@langchain/pinecone';
+import { getPineconeClient } from "@/lib/others/pinecone";
+import { PineconeStore } from "@langchain/pinecone";
 import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query';
 
 export const appRouter = router({
@@ -157,19 +156,33 @@ export const appRouter = router({
                         id: createdFile.id,
                     },
                 })
-            } catch (error) {
-                await prisma.file.update({
+
+                await prisma.user.update({
                     data: {
-                        uploadstatus: 'FAILED',
+                        imports: {
+                            increment: 1
+                        }
                     },
+                    where: {
+                        id: userId
+                    }
+                })
+
+                console.log("file uploaded successfully")
+                return createdFile;
+
+            } catch (error) {
+                await prisma.file.delete({
                     where: {
                         id: createdFile.id,
                     },
                 })
-                console.log(error);
+                throw new TRPCError({
+                    message: "failed to load your document",
+                    code: 'INTERNAL_SERVER_ERROR'
+                })
             }
 
-            return createdFile;
         }),
 
     getFileUploadStatus:
