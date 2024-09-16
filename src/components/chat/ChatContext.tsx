@@ -4,11 +4,8 @@ import {
     useRef,
     useState,
 } from 'react'
-import { useToast } from '../ui/use-toast'
 import { useMutation } from '@tanstack/react-query'
 import { trpc } from '@/app/_trpc/client'
-import prisma from '@/db/prismaClient'
-import toast from 'react-hot-toast'
 import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query'
 
 type StreamResponse = {
@@ -60,7 +57,7 @@ export const ChatContextProvider = ({
                 throw new Error('Failed to send message')
             }
 
-            return response.body
+            return await response.text()
         },
         onMutate: async ({ message }) => {
             backUpMessage.current = message
@@ -111,7 +108,7 @@ export const ChatContextProvider = ({
                     ) ?? [],
             }
         },
-        onSuccess: async (stream) => {
+        onSuccess: async (accResponse) => {
             setIsLoading(false)
 
             // if (!stream) {
@@ -123,6 +120,58 @@ export const ChatContextProvider = ({
             // let done = false
 
             // let accResponse = ''
+
+            utils.getFileMessages.setInfiniteData(
+                { fileId, limit: INFINITE_QUERY_LIMIT },
+                (old) => {
+                    if (!old) return { pages: [], pageParams: [] };
+
+                    let isAiResponseCreated = old.pages.some(
+                        (page) =>
+                            page.messages.some(
+                                (message) => message.id === 'ai-response'
+                            )
+                    );
+
+                    let updatedPages = old.pages.map((page) => {
+                        if (page === old.pages[0]) {
+                            let updatedMessages;
+
+                            if (!isAiResponseCreated) {
+                                updatedMessages = [
+                                    {
+                                        createdAt: new Date().toISOString(),
+                                        id: 'ai-response',
+                                        text: accResponse,
+                                        isUserMessage: false,
+                                    },
+                                    ...page.messages,
+                                ];
+                            } else {
+                                updatedMessages = page.messages.map((message) => {
+                                    if (message.id === 'ai-response') {
+                                        return {
+                                            ...message,
+                                            text: accResponse,
+                                        };
+                                    }
+                                    return message;
+                                });
+                            }
+
+                            return {
+                                ...page,
+                                messages: updatedMessages,
+                            };
+                        }
+
+                        return page;
+                    });
+
+                    return { ...old, pages: updatedPages };
+                }
+            );
+
 
 
         },

@@ -13,18 +13,18 @@ import { makeStream } from "@/lib/helpers/utils";
         * A custom Response subclass that accepts a ReadableStream.
         * This allows creating a streaming Response for async generators.
 */
-class StreamingResponse extends Response {
+// class StreamingResponse extends Response {
 
-    constructor(res: ReadableStream<any>, init?: ResponseInit) {
-        super(res as any, {
-            ...init,
-            status: 200,
-            headers: {
-                ...init?.headers,
-            },
-        });
-    }
-}
+//     constructor(res: ReadableStream<any>, init?: ResponseInit) {
+//         super(res as any, {
+//             ...init,
+//             status: 200,
+//             headers: {
+//                 ...init?.headers,
+//             },
+//         });
+//     }
+// }
 
 export const POST = async (request: NextRequest) => {
     //endpoint for asking a question to a PDF
@@ -84,7 +84,7 @@ export const POST = async (request: NextRequest) => {
             fileId,
         },
         orderBy: {
-            createdAt: 'asc',
+            createdAt: 'desc',
         },
         take: 6,
     })
