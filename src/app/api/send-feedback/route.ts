@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
             },
         });
     } catch (error) {
-        return new Response(JSON.stringify({ message: 'Message not sent', error: error.message }), {
+        return new Response(JSON.stringify({ message: 'Message not sent'}), {
             status: 400,
             headers: {
                 'Content-Type': 'application/json',
