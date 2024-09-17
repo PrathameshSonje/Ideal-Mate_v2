@@ -2,12 +2,10 @@ import prisma from "@/db/prismaClient"
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { auth } from "../../../../auth";
 import { UploadThingError } from "uploadthing/server";
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
 import { getPineconeClient } from "@/lib/others/pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { HfInference } from '@huggingface/inference'
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 
 const f = createUploadthing();

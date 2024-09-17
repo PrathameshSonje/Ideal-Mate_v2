@@ -84,11 +84,17 @@ const CustomInput: React.FC<InputProps> = (({ setDialogOpen, className, type, ..
             const res = await startUpload([pdfFile])
 
             if (!res) {
+                setDialogOpen(false)
                 return toast.error('someting went wrong')
             }
 
             const [fileResponse] = res
             const key = fileResponse?.key
+
+            if (!key) {
+                setDialogOpen(false)
+                return toast.error('someting went wrong')
+            }
 
             startPolling({ key })
         } else if (header == 'html') {

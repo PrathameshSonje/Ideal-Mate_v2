@@ -34,8 +34,6 @@ export const PdfView = ({ fileUrl }: PdfViewProps) => {
             width: window.innerWidth,
             height: window.innerHeight,
         })
-        console.log(windowSize.width);
-        
     }
 
     useEffect(() => {

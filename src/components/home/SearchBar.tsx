@@ -1,7 +1,5 @@
 import { cn } from "@/lib/helpers/utils"
-import { Button } from "../ui/button"
-import { ArrowRight, Search } from "lucide-react"
-import { ChangeEventHandler, useEffect } from "react"
+import { Search } from "lucide-react"
 import React from "react"
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -9,7 +7,6 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 export const SearchBar = React.memo(({ handleChange, className, type, ...props }: InputProps) => {
-    console.log("search bar rendered");
 
     return (
         <div className={cn("flex items-center justify-between px-2 py-1 gap-2 rounded-sm border", className)}>
