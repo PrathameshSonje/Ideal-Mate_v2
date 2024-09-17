@@ -23,9 +23,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     session: { strategy: "jwt" },
     callbacks: {
         async session({ token, session }) {
-            if (token.sub && session.user) {
-                session.user.id = token.sub;
+            if (token.sub && session.user) {                
+                session.user.id = token.sub.replace(/^"|"$/g, '');
             }
+            console.log(session);
+            
             return session;
         },
         async jwt({ token }) {

@@ -21,8 +21,8 @@ const UploadDropzone = ({ setOpen: setIsOpen }: { setOpen: React.Dispatch<SetSta
     const { mutate: startPolling } = trpc.getFile.useMutation(
         {
             onSuccess: (file) => {
-                setIsOpen(false)
                 utils.getUserFiles.invalidate();
+                setIsOpen(false)
                 router.push(`/chat/${file.id}`)
             },
             retry: true,
