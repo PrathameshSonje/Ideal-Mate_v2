@@ -71,7 +71,7 @@ export default async function Home() {
             gradientColor={"#D9D9D955"}
           >
             <div className="flex gap-2 items-baseline justify-center font-bold">
-              <span className="font-bold text-zinc-800 text-center">🥱 Tons of Reading</span>
+              <span className="font-bold text-zinc-800 text-center">🫠 Tons of Reading</span>
             </div>
             <Image
               className="p-4 mt-4 rounded-md overflow-hidden bg-zinc-100 backdrop-blur-md pr-0 max-h-[500px]"
@@ -85,7 +85,7 @@ export default async function Home() {
             gradientColor={"#D9D9D955"}
           >
             <div className="flex gap-2 items-baseline justify-center font-bold">
-              <span className="font-bold text-zinc-600">With</span>
+              <span className="font-bold text-zinc-600">🥱</span>
               <SparklesText
                 text="IdealMate."
                 className="text-[32px] "
