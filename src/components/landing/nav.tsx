@@ -12,7 +12,7 @@ export default async function Navbar() {
         <div className="fixed top-0 left-0 right-0 p-4 z-50 ">
             <nav className="w-full mx-auto bg-white bg-opacity-70 backdrop-blur-md shadow-sm rounded-full border">
                 <div className="px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center justify-between h-[56px]">
                         <div className="flex justify-center items-center gap-2 flex-shrink-0">
                             <ImLogo />
                             <span className="text-xl font-bold text-zinc-800">
@@ -20,7 +20,7 @@ export default async function Navbar() {
                             </span>
                         </div>
                         <div className="hidden md:block">
-                            <div className="ml-10 flex text-[18px] space-x-10 text-zinc-800 justify-center items-center outline-none font-medium">
+                            <div className="ml-10 flex text-[16px] space-x-10 text-zinc-800 justify-center items-center outline-none font-medium">
                                 <a href="/contact" className='hover:text-orange-500'>Contact</a>
                                 <a href="/pricing" className='hover:text-orange-500'>Pricing</a>
                                 {

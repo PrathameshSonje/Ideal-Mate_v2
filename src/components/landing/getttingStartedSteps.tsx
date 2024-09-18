@@ -32,19 +32,19 @@ export const GettingStartedSteps = () => {
                     <AnimatedShinyText>
                         <span className={`font-bold text-3xl ${getTextStyle(0)}`}>1. Sign up for a account</span>
                     </AnimatedShinyText>
-                    <p className="font-semibold text-lg text-zinc-500">Signup for a account free or premium to access the application</p>
+                    <p className="font-semibold text-lg text-zinc-500 mt-1">Signup for a account free or premium to access the application</p>
                 </div>
                 <div id="step_2">
                     <AnimatedShinyText>
                         <span className={`font-bold text-3xl ${getTextStyle(1)}`}>2. Upload Documents</span>
                     </AnimatedShinyText>
-                    <p className="font-semibold text-lg text-zinc-500">start uploading documents. Supported documents formats are .pptx, .pdf, etc. You can also upload websites or pdfs directly using url</p>
+                    <p className="font-semibold text-lg text-zinc-500 mt-1">start uploading documents. Supported documents formats are .pptx, .pdf, etc. You can also upload websites or pdfs directly using url</p>
                 </div>
                 <div id="step_3">
                     <AnimatedShinyText>
                         <span className={`font-bold text-3xl ${getTextStyle(2)}`}>3. Start asking Questions</span>
                     </AnimatedShinyText>
-                    <p className="font-semibold text-lg text-zinc-500">After you upload documents, out AI starts analyzing them and just like that you can start chatting with your documents</p>
+                    <p className="font-semibold text-lg text-zinc-500 mt-1">After you upload documents, out AI starts analyzing them and just like that you can start chatting with your documents</p>
                 </div>
             </div>
             <ShineBorder

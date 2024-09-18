@@ -18,7 +18,7 @@ export default async function Home() {
     <div>
       <section id="hero" className="flex flex-col items-center">
         <Pill />
-        <h1 className="w-2/3 text-[92px] mx-auto font-bold text-center leading-[0.90] tracking-tighter">
+        <h1 className="w-2/3 text-[84px] mx-auto font-bold text-center leading-[0.90] tracking-tighter">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">Revolutionize {" "}</span>
           <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-800">How You Access {" "}</span>
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">Information {" "}</span>
@@ -60,7 +60,7 @@ export default async function Home() {
       </section>
       <section className="flex flex-col justify-center mt-12 px-32">
         <h1 className="font-bold text-[52px] w-[40%] text-zinc-800 mx-auto text-center leading-[0.90] tracking-tighter">
-          Find and understand info in documents in <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">milliseconds</span>
+          Find and understand info from documents <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">milliseconds</span>
         </h1>
         <h3 className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-zinc-600 via-zinc-500 to-zinc-400 text-[18px] w-[50%] mx-auto text-center mt-4">
           Generate an AI assistant on top of any document or group of documents. Ask questions to quickly extract and summarize data.
@@ -130,7 +130,7 @@ export default async function Home() {
         <ShinyButton text="Get Started for free" className="mt-10 p-4 px-6" />
       </section>
       <section id="faq" className="relative flex flex-col justify-center items-center mt-36 overflow-hidden p-12">
-        <h1 className="font-bold text-[52px] w-[40%] text-zinc-800 mx-auto text-center leading-[0.90] tracking-tighter">
+        <h1 className="font-bold text-[52px] w-[80%] text-zinc-800 mx-auto text-center leading-[1] tracking-tighter">
           Frequently Asked <span className="bg-clip-text text-transparent bg-gradient-to-r  from-orange-500 via-orange-400 to-orange-300">Questions</span>
         </h1>
         <FaqSection />
