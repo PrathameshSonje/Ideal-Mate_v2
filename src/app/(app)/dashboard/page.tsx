@@ -35,9 +35,9 @@ const Page = () => {
     })
 
     return (
-        <div id="dashboard" className="w-full h-full flex items-center justify-center px-12">
+        <div id="dashboard" className="w-full h-full flex items-center justify-center px-4 py-4 md:px-12">
             <div className="grid grid-cols-10 gap-3">
-                <div className="flex flex-col gap-3 col-span-7">
+                <div className="flex flex-col gap-3 lg:col-span-7 col-span-10">
                     <InsightsCard User={User!} isLoading={userLoading} />
                     <FilesCard userFiles={userFiles!} isFilesLoading={isLoading} deleteFile={deleteFile} currentlyDeletingFile={currentlyDeletingFile} />
                 </div>

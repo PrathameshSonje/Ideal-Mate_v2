@@ -1,12 +1,15 @@
 import Navbar from "@/components/landing/nav"
+import { auth } from "../../../auth";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    const session = await auth();
+
     return <div>
-        <Navbar />
+        <Navbar session={session} />
         {children}
     </div>
 }

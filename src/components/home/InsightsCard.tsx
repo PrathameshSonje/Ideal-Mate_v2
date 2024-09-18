@@ -12,7 +12,7 @@ export const InsightsCard = ({ User, isLoading }: { User: User, isLoading: boole
 
     return (
         <CardWrapper>
-            <div id="insights" className="flex flex-col gap-3 h-[96px] w-[740px] max-w-full">
+            <div id="insights" className="flex flex-col gap-3 md:h-[96px] w-[740px] max-w-full">
                 <p className="font-semibold text-[28px] text-zinc-800">
                     Welcome back,{" "}
                     <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent font-bold">
@@ -25,14 +25,14 @@ export const InsightsCard = ({ User, isLoading }: { User: User, isLoading: boole
                 </p>
                 {User && (
                     <div className="flex items-center justify-between gap-2 w-full shrink">
-                        <div id="import" className="flex gap-3 w-full shrink">
+                        <div id="import" className="flex flex-col md:flex-row  md:gap-3 w-full shrink">
                             <span className="font-semibold text-[28px] text-zinc-800">
                                 {User.imports}/{importLimit}
                             </span>
                             <LimitBar label="Imports" used={User.imports} limit={importLimit} />
                         </div>
                         <div className="w-[1px] h-8 mx-6 bg-zinc-300"></div>
-                        <div id="generations" className="flex gap-3 w-full shrink">
+                        <div id="generations" className="flex flex-col md:flex-row  md:gap-3 w-full shrink">
                             <span className="font-semibold text-[28px] text-zinc-800">
                                 {User.generations}/{generationsLimit}
                             </span>

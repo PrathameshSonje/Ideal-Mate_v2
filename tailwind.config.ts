@@ -14,6 +14,7 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
+        "lg": "1025px",
         "2xl": "1400px",
       },
     },
@@ -126,8 +127,13 @@ const config = {
             transform: "translate(-50%, -50%) scale(0.9)",
           },
         },
+        grid: {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
+        },
       },
       animation: {
+        "grid": "grid 15s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",

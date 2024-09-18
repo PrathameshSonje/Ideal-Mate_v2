@@ -83,7 +83,7 @@ export const PdfView = ({ fileUrl }: PdfViewProps) => {
                         }}
                     >
                         <Page
-                            width={(windowSize.width - 130) / 2}
+                            width={windowSize.width <= 768 ? windowSize.width : (windowSize.width - 130) / 2}
                             pageNumber={currentPage}
                         ></Page>
                     </Document>

@@ -35,7 +35,7 @@ export const FaqSection = () => {
     }
 
     return (
-        <div className="w-full max-w-3xl mx-auto p-4 space-y-4 mt-16">
+        <div className="w-full lg:max-w-3xl mx-auto p-4 space-y-4 mt-16">
             {faqData.map((faq, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
                     <button

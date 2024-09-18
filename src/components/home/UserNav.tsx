@@ -8,13 +8,14 @@ import {
 import { User } from "lucide-react"
 import Link from 'next/link'
 import { signOut } from '../../../auth'
+import { signOutAction } from '@/actions/singout'
 
 interface UserAccountNavProps {
     email: string | undefined | null
     name: string | undefined | null
 }
 
-const UserAccountNav = async ({
+const UserAccountNav = ({
     email,
     name,
 }: UserAccountNavProps) => {
@@ -56,13 +57,7 @@ const UserAccountNav = async ({
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem className='cursor-pointer font-medium text-[16px] px-5 py-2'>
-                    <form action={async () => {
-                        "use server"
-
-                        await signOut({
-                            redirectTo: "/"
-                        });
-                    }}>
+                    <form action={signOutAction}>
                         <button type="submit">
                             <span className='text-red-500'>Signout</span>
                         </button>

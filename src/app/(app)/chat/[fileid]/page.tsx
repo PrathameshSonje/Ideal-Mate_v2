@@ -29,7 +29,7 @@ const ChatPage = async ({ params }: PageProps) => {
     //its a website
 
     return (
-        <div className="flex h-full">
+        <div className="flex flex-col md:flex-row h-full">
             {!file ? (
                 <div className="w-full h-full flex items-center flex-1 justify-center">
                     <Loader2 className="animate-spin" />
@@ -41,7 +41,7 @@ const ChatPage = async ({ params }: PageProps) => {
                     <PdfView fileUrl={file.url} />
                 )
             )}
-            <div className="flex-1 border-l h-full max-h-[calc(100vh-60px)]">
+            <div className="md:flex-1 border-l h-full max-h-[calc(100vh-60px)]">
                 <ChatWrapper fileId={fileid} currentUserName={currentUserName!} />
             </div>
         </div>

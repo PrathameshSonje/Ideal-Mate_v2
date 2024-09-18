@@ -25,7 +25,7 @@ export const TodoCard = () => {
     }]
 
     return (
-        <CardWrapper className="col-span-3">
+        <CardWrapper className="col-span-10 lg:col-span-3">
             <div className="text-zinc-800 flex items-center justify-between">
                 <span className="font-bold text-xl">To Do's</span>
                 <ListPlus strokeWidth={1.2}/>

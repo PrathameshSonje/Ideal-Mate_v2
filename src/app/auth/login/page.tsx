@@ -4,7 +4,7 @@ import { Suspense } from "react"
 const Login = () => {
     return (
         <div className="flex items-center justify-center w-full h-full">
-            <Suspense fallback={<div></div>}>
+            <Suspense fallback={<div>Just a minute</div>}>
                 <LoginForm />
             </Suspense>
         </div>
