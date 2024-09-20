@@ -7,7 +7,8 @@
 export const publicRoutes = [
     '/',
     '/api/uploadthing',
-    '/api/download-pdf'
+    '/api/download-pdf',
+    '/pricing'
 ];
 
 
